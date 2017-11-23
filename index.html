@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <script>
+      WebFontConfig = {
+         custom: {
+            families: [],
+            urls: []
+          }
+       };
+       (function(d) {
+          var wf = d.createElement('script'), s = d.scripts[0];
+          wf.async = true;
+          wf.src = 'js/vendors/webfontloader.js';
+          s.parentNode.insertBefore(wf, s);
+       })(document);
+    </script>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+  </head>
+  <body>
+    <h1>Hello World!</h1>
+    <!-- All of the Node.js APIs are available in this renderer process. -->
+    We are using Node.js <script>document.write(process.versions.node)</script>,
+    Chromium <script>document.write(process.versions.chrome)</script>,
+    and Electron <script>document.write(process.versions.electron)</script>.
+
+    <script src="js/vendors/phaser.min.js"></script>
+    <script>
+      // You can also require other files to run in this process
+      require('./js/johnny_five.js')
+      require('./js/script.js')
+    </script>
+  </body>
+</html>
