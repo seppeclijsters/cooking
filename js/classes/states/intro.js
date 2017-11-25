@@ -1,11 +1,14 @@
 const Button = require('../objects/Button.js');
+const Play = require('./play.js');
+const Instruct = require('./Instruct.js');
 
 class Intro extends Phaser.State {
   preload(){
     this.load.image('logo', './assets/logo.png');
     this.load.image('how_button','./assets/hoe_button.png');
-    this.load.image('start_button','./assets/start_button.png')
-
+    this.load.image('start_button','./assets/start_button.png');
+    this.game.state.add('Play', Play, false);
+    this.game.state.add('Instruct', Instruct, false);
   }
   create(){
     this.game.stage.backgroundColor = "#FFFFFF";
@@ -27,10 +30,12 @@ class Intro extends Phaser.State {
 
   howClick(){
     console.log('hoe spelen ?');
+    this.game.state.start('Instruct');
   }
 
   startClick(){
     console.log('start spel');
+    this.game.state.start('Play');
   }
 }
 
