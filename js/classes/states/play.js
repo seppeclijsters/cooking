@@ -6,6 +6,7 @@ class Play extends Phaser.State {
   create() {
     this.background();
     this.cookingPots();
+    this.startGeneratingIngredients();
   }
   background() {
     this.game.stage.backgroundColor = `#FFFFFF`;
@@ -21,6 +22,18 @@ class Play extends Phaser.State {
     this.potsTeam1.add(this.pot2);
     this.potsTeam1.add(this.pot3);
     this.potsTeam1.add(this.pot4);
+  }
+
+  startGeneratingIngredients() {
+    this.ingredientsGenerator = this.time.events.loop(3000, this.pickIngredient, this);
+    this.ingredientsGenerator.timer.start();
+  }
+
+  pickIngredient() {
+    const items = [`egg`, `meat`, `fish`, `tomato`, `patato`, `carrot`];
+    const item = items[Math.floor(Math.random() * items.length)];
+    console.log(`hello ${item}`);
+    this.add.sprite(300, 300, item);
   }
 }
 
