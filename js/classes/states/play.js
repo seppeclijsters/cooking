@@ -6,6 +6,7 @@ let leftKey;
 let rightKey;
 // let items;
 let item;
+let item2;
 let score = 0;
 
 class Play extends Phaser.State {
@@ -17,6 +18,7 @@ class Play extends Phaser.State {
     this.startGeneratingIngredients();
     this.createButtons();
     this.pickIngredient();
+    this.pickIngredient2();
     this.createScore();
   }
   createButtons() {
@@ -35,27 +37,22 @@ class Play extends Phaser.State {
   }
   cookingPots() {
     this.potsTeam1 = this.game.add.group();
-    this.pot1 = new Pot(this.game, this.game.world.centerX - 560, this.game.world.centerY + 200);
-    this.pot2 = new Pot(this.game, this.game.world.centerX - 220, this.game.world.centerY + 200);
-    this.pot3 = new Pot(this.game, this.game.world.centerX + 560, this.game.world.centerY + 200);
-    this.pot4 = new Pot(this.game, this.game.world.centerX + 220, this.game.world.centerY + 200);
+    this.pot1 = new Pot(this.game, this.game.world.centerX + 200, this.game.world.centerY + 200);
+    this.pot2 = new Pot(this.game, this.game.world.centerX - 200, this.game.world.centerY + 200);
     this.potsTeam1.add(this.pot1);
     this.potsTeam1.add(this.pot2);
-    this.potsTeam1.add(this.pot3);
-    this.potsTeam1.add(this.pot4);
   }
 
   startGeneratingIngredients() {
     this.ingredientsGenerator = this.time.events.loop(3000, this.pickIngredient, this);
-    //this.ingredientsGenerator = this.time.events.loop(2900, this.killIngredient, this);
-
+    this.ingredientsGenerator2 = this.time.events.loop(3000, this.pickIngredient2, this);
     this.ingredientsGenerator.timer.start();
+    this.ingredientsGenerator2.timer.start();
   }
-
   pickIngredient() {
     //isalive functie lost dit op
     if (this.ingredient) {
-      if (this.ingredient.alive == true) {
+      if (this.ingredient.alive === true) {
         this.ingredient.kill();
         console.log(`-1 leven`);
         console.log(this.ingredient.alive);
@@ -63,21 +60,52 @@ class Play extends Phaser.State {
     }
 
     this.items = [
+      [`egg`, upKey],
+      [`meat`, downKey],
+      [`fish`, leftKey],
+      [`tomato`, rightKey],
+      [`potato`, rightKey],
+      [`carrot`, downKey]
+    ];
+    item = this.items[Math.floor(Math.random() * this.items.length)];
+    this.ingredient = this.add.sprite(this.game.world.centerX - 200 , this.game.world.centerY, item[0]);
+    this.ingredient.anchor.set(0.5);
+    console.log(item);
+    //this.add.sprite(300, 300, item);
+  }
+  pickIngredient2() {
+    //isalive functie lost dit op
+    if (this.ingredient2) {
+      if (this.ingredient2.alive === true) {
+        this.ingredient2.kill();
+        console.log(`-1 leven`);
+        console.log(this.ingredient2.alive);
+      }
+    }
+
+    this.items2 = [
       [`egg`, upKey ],
       [`meat`, downKey ],
       [`fish`, leftKey],
-      [`tomato`, rightKey ]
-      // [`potato`, this.cursors.down.shiftKey ],
-      // [`carrot`, this.cursors.spaceKey.isDown ]
+      [`tomato`, rightKey ],
+      [`potato`, upKey ],
+      [`carrot`, downKey ]
     ];
-    item = this.items[Math.floor(Math.random() * this.items.length)];
-    this.ingredient = this.add.sprite(300, 300, item[0]);
-    console.log(item);
+    item2 = this.items2[Math.floor(Math.random() * this.items2.length)];
+    this.ingredient2 = this.add.sprite(this.game.world.centerX + 200 , this.game.world.centerY, item2[0]);
+    this.ingredient2.anchor.set(0.5);
+    console.log(item2);
     //this.add.sprite(300, 300, item);
   }
   update() {
     if (item[1].isDown) {
       this.ingredient.destroy();
+      score += 100;
+      this.scoreField.text = `score${score}`;
+    }
+
+    if (item2[1].isDown) {
+      this.ingredient2.destroy();
       score += 100;
       this.scoreField.text = `score${score}`;
     }

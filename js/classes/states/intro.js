@@ -14,7 +14,7 @@ class Intro extends Phaser.State {
     this.game.load.image(`egg`, `assets/egg.png`);
     this.game.load.image(`fish`, `assets/fish.png`);
     this.game.load.image(`meat`, `assets/meat.png`);
-    this.game.load.image(`patato`, `assets/patato.png`);
+    this.game.load.image(`potato`, `assets/patato.png`);
     this.game.load.image(`tomato`, `assets/tomato.png`);
 
     this.game.state.add(`Play`, Play, false);
