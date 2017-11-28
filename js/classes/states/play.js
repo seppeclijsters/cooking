@@ -55,8 +55,10 @@ class Play extends Phaser.State {
   pickIngredient() {
     //isalive functie lost dit op
     if (this.ingredient) {
-      if (this.ingredient.kill()) {
+      if (this.ingredient.alive == true) {
+        this.ingredient.kill();
         console.log(`-1 leven`);
+        console.log(this.ingredient.alive);
       }
     }
 
