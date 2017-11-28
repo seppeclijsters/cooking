@@ -8,6 +8,7 @@ let rightKey;
 let item;
 let item2;
 let score = 0;
+let score2 = 0;
 
 class Play extends Phaser.State {
   preload() {
@@ -29,7 +30,9 @@ class Play extends Phaser.State {
     rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
   }
   createScore() {
-    this.scoreField = this.add.text(20, 20, `score: 0`, {font: `20px BigJohn`, fill: `black`})
+    this.scoreField = this.add.text(20, 20, `score: 0`, {font: `20px BigJohn`, fill: `black`});
+    this.scoreField2 = this.add.text(1000, 20, `score: 0`, {font: `20px BigJohn`, fill: `black`});
+
   }
   background() {
     this.game.stage.backgroundColor = `#FFFFFF`;
@@ -106,8 +109,8 @@ class Play extends Phaser.State {
 
     if (item2[1].isDown) {
       this.ingredient2.destroy();
-      score += 100;
-      this.scoreField.text = `score${score}`;
+      score2 += 100;
+      this.scoreField2.text = `score${score2}`;
     }
   }
 }
