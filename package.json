@@ -21,9 +21,9 @@
     "electron-rebuild": "^1.6.0"
   },
   "dependencies": {
-    "johnny-five": "^0.11.7",
     "eslint": "^3.13.1",
     "eslint-config-devine": "^1.6.1",
-    "eslint-loader": "^1.6.1"
+    "eslint-loader": "^1.6.1",
+    "johnny-five": "^0.11.7"
   }
 }

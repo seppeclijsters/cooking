@@ -3,10 +3,10 @@ const Play = require(`./play.js`);
 const Instruct = require(`./Instruct.js`);
 
 class Intro extends Phaser.State {
-  preload(){
+  preload() {
     this.load.image(`logo`, `./assets/logo.png`);
-    this.load.image(`how_button`,`./assets/hoe_button.png`);
-    this.load.image(`start_button`,`./assets/start_button.png`);
+    this.load.image(`how_button`, `./assets/hoe_button.png`);
+    this.load.image(`start_button`, `./assets/start_button.png`);
 
     this.game.load.image(`tiles`, `assets/tiles.png`);
     this.game.load.image(`pot`, `assets/cooking_pot.png`);
@@ -14,20 +14,20 @@ class Intro extends Phaser.State {
     this.game.load.image(`egg`, `assets/egg.png`);
     this.game.load.image(`fish`, `assets/fish.png`);
     this.game.load.image(`meat`, `assets/meat.png`);
-    this.game.load.image(`patato`, `assets/patato.png`);
+    this.game.load.image(`potato`, `assets/patato.png`);
     this.game.load.image(`tomato`, `assets/tomato.png`);
 
     this.game.state.add(`Play`, Play, false);
     this.game.state.add(`Instruct`, Instruct, false);
   }
-  create(){
-    this.game.stage.backgroundColor = "#ab332f";
+  create() {
+    this.game.stage.backgroundColor = `#ab332f`;
     this.logo();
     this.buttons();
   }
-  logo(){
+  logo() {
     this.logo = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 180, `logo`);
-    this. game.add.tween(this.logo).from({y: -200}, 1500, Phaser.Easing.Bounce.Out, true);
+    this.game.add.tween(this.logo).from({y: -200}, 1500, Phaser.Easing.Bounce.Out, true);
 	  this.logo.anchor.set(0.5);
   }
 
