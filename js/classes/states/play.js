@@ -37,66 +37,99 @@ class Play extends Phaser.State {
     this.board = new five.Board();
 
     this.board.on(`ready`, () => {
-      this.buttonTomato = new five.Button(2);
-      this.buttonMeat = new five.Button(3);
-      this.buttonEgg = new five.Button(4);
-      this.buttonFish = new five.Button(5);
-      this.buttonCarrot = new five.Button(6);
-      this.buttonPotato = new five.Button(7);
+      // this.buttonTomato = new five.Button(2);
+      // this.buttonMeat = new five.Button(3);
+      // this.buttonEgg = new five.Button(4);
+      // this.buttonFish = new five.Button(5);
+      // this.buttonCarrot = new five.Button(6);
+      // this.buttonPotato = new five.Button(7);
+      //
+      // const motion = new five.Motion(8);
+      //
+      //   // "calibrated" occurs once, at the beginning of a session,
+      // motion.on(`calibrated`, () => {
+      //   console.log(`calibrated`, Date.now());
+      // });
+      //
+      // // "motionstart" events are fired when the "calibrated"
+      // // proximal area is disrupted, generally by some form of movement
+      // motion.on(`motionstart`, () => {
+      //   console.log(`motionstart`, Date.now());
+      // });
+      //
+      // // "motionend" events are fired following a "motionstart" event
+      // // when no movement has occurred in X ms
+      // motion.on(`motionend`, () => {
+      //   console.log(`motionend`, Date.now());
+      // });
+      //
+      // this.buttonTomato.on(`down`, () => {
+      //   buttonTomatoUp = true;
+      //   console.log(`buttonTomato`);
+      // });
+      //
+      // this.buttonTomato.on(`up`, () => {
+      //   buttonTomatoUp = false;
+      // });
+      //
+      // this.buttonMeat.on(`down`, () => {
+      //   buttonMeatUp = true;
+      //   console.log(`buttonMeat`);
+      // });
+      //
+      // this.buttonMeat.on(`up`, () => {
+      //   buttonMeatUp = false;
+      // });
+      //
+      // this.buttonEgg.on(`down`, () => {
+      //   buttonEggUp = true;
+      //   // console.log(`buttonEgg`);
+      // });
+      //
+      // this.buttonEgg.on(`up`, () => {
+      //   buttonEggUp = false;
+      // });
+      //
+      // this.buttonFish.on(`down`, () => {
+      //   buttonFishUp = true;
+      //   console.log(`buttonFish`);
+      // });
+      //
+      // this.buttonFish.on(`up`, () => {
+      //   buttonFishUp = false;
+      // });
+      //
+      // this.buttonCarrot.on(`down`, () => {
+      //   buttonCarrotUp = true;
+      //   console.log(`buttonCarrot`);
+      // });
+      //
+      // this.buttonCarrot.on(`up`, () => {
+      //   buttonCarrotUp = false;
+      // });
+      //
+      // this.buttonPotato.on(`down`, () => {
+      //   buttonPotatoUp = true;
+      //   console.log(`buttonPotato`);
+      // });
+      //
+      // this.buttonPotato.on(`up`, () => {
+      //   buttonPotatoUp = false;
+      // });
 
-      this.buttonTomato.on(`down`, () => {
-        buttonTomatoUp = true;
-        console.log(`buttonTomato`);
+      // Initialize the RGB LED
+      const led = new five.Led.RGB({
+        pins: {
+          red: 10,
+          green: 9,
+          blue: 11
+        }
       });
 
-      this.buttonTomato.on(`up`, () => {
-        buttonTomatoUp = false;
-      });
+      led.on();
+      led.color(`#FF0000`);
 
-      this.buttonMeat.on(`down`, () => {
-        buttonMeatUp = true;
-        console.log(`buttonMeat`);
-      });
-
-      this.buttonMeat.on(`up`, () => {
-        buttonMeatUp = false;
-      });
-
-      this.buttonEgg.on(`down`, () => {
-        buttonEggUp = true;
-        console.log(`buttonEgg`);
-      });
-
-      this.buttonEgg.on(`up`, () => {
-        buttonEggUp = false;
-      });
-
-      this.buttonFish.on(`down`, () => {
-        buttonFishUp = true;
-        console.log(`buttonFish`);
-      });
-
-      this.buttonFish.on(`up`, () => {
-        buttonFishUp = false;
-      });
-
-      this.buttonCarrot.on(`down`, () => {
-        buttonCarrotUp = true;
-        console.log(`buttonCarrot`);
-      });
-
-      this.buttonCarrot.on(`up`, () => {
-        buttonCarrotUp = false;
-      });
-
-      this.buttonPotato.on(`down`, () => {
-        buttonPotatoUp = true;
-        console.log(`buttonPotato`);
-      });
-
-      this.buttonPotato.on(`up`, () => {
-        buttonPotatoUp = false;
-      });
+      // led.blink(1000);
     });
 
   }
@@ -152,7 +185,7 @@ class Play extends Phaser.State {
     item = this.items[Math.floor(Math.random() * this.items.length)];
     this.ingredient = this.add.sprite(this.game.world.centerX - 200, this.game.world.centerY, item[0]);
     this.ingredient.anchor.set(0.5);
-    console.log(item[1]);
+    // console.log(item[1]);
     //this.add.sprite(300, 300, item);
   }
   pickIngredient2() {
