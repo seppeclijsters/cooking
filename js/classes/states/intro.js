@@ -26,8 +26,9 @@ class Intro extends Phaser.State {
   create() {
     this.middleX = this.game.world.centerX;
     this.middleY = this.game.world.centerY;
-    this.game.stage.backgroundColor = `#ab332f`;
-    // this.game.stage.backgroundColor = `#ddb440`;
+    this.game.stage.backgroundColor = `#ddb440`;
+    // this.game.stage.backgroundColor = `#ddb440`; #ab332f
+    //this.background();
     this.logo();
     this.buttons();
     this.array();
@@ -72,41 +73,43 @@ class Intro extends Phaser.State {
     }
   }
   logo() {
-    this.pot = this.game.add.sprite(this.middleX, this.middleX, `cookingPot`);
+    this.pot = this.game.add.sprite(this.middleX, this.middleX - 25, `cookingPot`);
+    this.pot.scale.setTo(1.25);
     this.pot.anchor.set(0.5);
 
-    // this.logo = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 180, `logo`);
-    // this.game.add.tween(this.logo).from({y: - 200}, 1500, Phaser.Easing.Bounce.Out, true);
-    // this.logo.anchor.set(0.5);
+    this.logo = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 200, `logo`);
+    this.game.add.tween(this.logo).from({y: - 200}, 1500, Phaser.Easing.Bounce.Out, true);
+    this.logo.anchor.set(0.5);
     this.tomato = this.game.add.sprite(300, 400, `tomato`);
     this.tomato.anchor.set(0.5);
-    this.tomato.scale.setTo(2);
+    //this.tomato.scale.setTo(2);
     // this.game.add.tween(this.tomato).to({x: [ 300, 600, 0, 0 ], y: [ 400, 600, 400, 0 ]}, 4000, `Sine.easeInOut`, true, - 1, false);
     this.game.add.tween(this.tomato).to({angle: 360}, 2400, Phaser.Easing.Cubic.In, true, - 1, 0);
 
     this.carrot = this.game.add.sprite(300, 400, `carrot`);
     this.carrot.anchor.set(0.5);
-    this.carrot.scale.setTo(2);
+    //this.carrot.scale.setTo(2);
     this.game.add.tween(this.carrot).to({angle: 360}, 2400, Phaser.Easing.Cubic.In, true, - 1, 0);
 
     this.fish = this.game.add.sprite(300, 400, `fish`);
     this.fish.anchor.set(0.5);
-    this.fish.scale.setTo(2);
+    //this.fish.scale.setTo(2);
     this.game.add.tween(this.fish).to({angle: 360}, 2400, Phaser.Easing.Cubic.In, true, 1300, - 1, 0);
 
     this.potato = this.game.add.sprite(300, 400, `potato`);
     this.potato.anchor.set(0.5);
     this.game.add.tween(this.potato).to({angle: 360}, 2400, Phaser.Easing.Cubic.In, true, - 1, 0);
 
-    this.potFront = this.game.add.sprite(this.middleX, this.middleX, `cookingPotFront`);
-    this.potFront.anchor.set(0.5);
+    // this.potFront = this.game.add.sprite(this.middleX, this.middleX - 25, `cookingPotFront`);
+    // this.potFront.scale.setTo(0.74);
+    // this.potFront.anchor.set(0.5);
   }
 
   buttons() {
-    this.how_button = new Button(this.game, this.game.world.centerX + 150, this.game.world.centerY + 200, `how_button`, this.howClick);
+    this.how_button = new Button(this.game, this.game.world.centerX + 150, this.game.world.centerY + 300, `how_button`, this.howClick);
     this.how_button.events.onInputDown.add(this.howClick, this);
 
-    this.start_button = new Button(this.game, this.game.world.centerX - 150, this.game.world.centerY + 200, `start_button`, this.startClick);
+    this.start_button = new Button(this.game, this.game.world.centerX - 150, this.game.world.centerY + 300, `start_button`, this.startClick);
     this.start_button.events.onInputDown.add(this.startClick, this);
 
     this.game.add.existing(this.start_button);
