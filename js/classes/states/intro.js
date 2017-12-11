@@ -8,6 +8,7 @@ class Intro extends Phaser.State {
     this.load.image(`logo`, `./assets/logo.png`);
     this.load.image(`how_button`, `./assets/hoe_button.png`);
     this.load.image(`start_button`, `./assets/start_button.png`);
+    this.load.image(`life`, `./assets/life.png`);
 
     this.game.load.image(`tiles`, `assets/tiles.png`);
     this.game.load.image(`pot`, `assets/cooking_pot.png`);
@@ -126,7 +127,7 @@ class Intro extends Phaser.State {
 
   update() {
     counter ++;
-    console.log(`counter = ${counter}`);
+    //console.log(`counter = ${counter}`);
     const posx = this.math.bezierInterpolation(this.points.x, this.i);
     const posy = this.math.bezierInterpolation(this.points.y, this.i);
     this.tomato.x = posx;
@@ -134,7 +135,7 @@ class Intro extends Phaser.State {
 
     if (counter > 50) {
       this.i2 += this.increment;
-      console.log(`this.I = ${this.i2}`);
+      //console.log(`this.I = ${this.i2}`);
       const posx2 = this.math.bezierInterpolation(this.points2.x, this.i2);
       const posy2 = this.math.bezierInterpolation(this.points2.y, this.i2);
       this.carrot.x = posx2;

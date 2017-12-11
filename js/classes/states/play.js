@@ -9,6 +9,8 @@ let buttonPotatoUp = false;
 let buttonEggUp = false;
 let buttonCarrotUp = false;
 
+const PlayerLives = 3;
+
 let upKey;
 let downKey;
 let leftKey;
@@ -26,12 +28,35 @@ class Play extends Phaser.State {
     this.initButtons();
     this.background();
     this.cookingPots();
+    this.createLivesPlayer1();
+    this.createLivesPlayer2();
     this.startGeneratingIngredients();
     this.createButtons();
     this.pickIngredient();
     this.pickIngredient2();
     this.createScore();
   }
+
+  createLivesPlayer1() {
+    this.lives = this.add.group();
+    const firstLifeIconX = 125 - (PlayerLives * 30);
+    for (let i = 0;i < PlayerLives;i ++) {
+      const life = this.lives.create(firstLifeIconX + (40 * i), 70, `life`);
+      life.scale.setTo(0.1, 0.1);
+      life.anchor.setTo(0.5, 0.5);
+    }
+  }
+
+  createLivesPlayer2() {
+    this.lives2 = this.add.group();
+    const firstLifeIconX2 = this.game.width - 335 - (PlayerLives * 30);
+    for (let i = 0;i < PlayerLives;i ++) {
+      const life2 = this.lives2.create(firstLifeIconX2 + (40 * i), 70, `life`);
+      life2.scale.setTo(0.1, 0.1);
+      life2.anchor.setTo(0.5, 0.5);
+    }
+  }
+
 
   initButtons() {
     this.board = new five.Board();
@@ -169,6 +194,13 @@ class Play extends Phaser.State {
     if (this.ingredient) {
       if (this.ingredient.alive === true) {
         this.ingredient.kill();
+        const life = this.lives.getFirstAlive();
+        if (life !== null) {
+          life.kill();
+          console.log(`life lost`);
+        } else {
+          console.log(`game Over`);
+        }
         // console.log(`-1 leven`);
         // console.log(this.ingredient.alive);
       }
@@ -188,11 +220,20 @@ class Play extends Phaser.State {
     // console.log(item[1]);
     //this.add.sprite(300, 300, item);
   }
+
   pickIngredient2() {
     //isalive functie lost dit op
     if (this.ingredient2) {
       if (this.ingredient2.alive === true) {
         this.ingredient2.kill();
+        const life2 = this.lives2.getFirstAlive();
+
+        if (life2 !== null) {
+          life2.kill();
+          console.log(`life lost`);
+        } else {
+          console.log(`game Over`);
+        }
         // console.log(`-1 leven`);
         // console.log(this.ingredient2.alive);
       }
