@@ -409,7 +409,7 @@ class Play extends Phaser.State {
     // }
 
     if (item2[1].isDown) {
-      this.stopGeneratingSmoke();
+      //this.stopGeneratingSmoke();
       //this.emitter.on = false;
       this.ingredient2.destroy();
       score2 += 100;
