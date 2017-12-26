@@ -31,6 +31,8 @@ class Play extends Phaser.State {
     this.createLivesPlayer1();
     this.createLivesPlayer2();
     this.startGeneratingIngredients();
+    this.startGeneratingSmoke();
+    this.createLivesPlayer1();
     this.createButtons();
     this.pickIngredient();
     this.pickIngredient2();
@@ -62,7 +64,7 @@ class Play extends Phaser.State {
     this.board = new five.Board();
 
     this.board.on(`ready`, () => {
-      // this.buttonTomato = new five.Button(2);
+      this.buttonTomato = new five.Button(2);
       // this.buttonMeat = new five.Button(3);
       // this.buttonEgg = new five.Button(4);
       // this.buttonFish = new five.Button(5);
@@ -70,8 +72,8 @@ class Play extends Phaser.State {
       // this.buttonPotato = new five.Button(7);
       //
       // const motion = new five.Motion(8);
-      //
-      //   // "calibrated" occurs once, at the beginning of a session,
+
+      // "calibrated" occurs once, at the beginning of a session,
       // motion.on(`calibrated`, () => {
       //   console.log(`calibrated`, Date.now());
       // });
@@ -88,14 +90,14 @@ class Play extends Phaser.State {
       //   console.log(`motionend`, Date.now());
       // });
       //
-      // this.buttonTomato.on(`down`, () => {
-      //   buttonTomatoUp = true;
-      //   console.log(`buttonTomato`);
-      // });
-      //
-      // this.buttonTomato.on(`up`, () => {
-      //   buttonTomatoUp = false;
-      // });
+      this.buttonTomato.on(`down`, () => {
+        buttonTomatoUp = true;
+        console.log(`buttonTomato`);
+      });
+
+      this.buttonTomato.on(`up`, () => {
+        buttonTomatoUp = false;
+      });
       //
       // this.buttonMeat.on(`down`, () => {
       //   buttonMeatUp = true;
@@ -189,6 +191,33 @@ class Play extends Phaser.State {
     this.ingredientsGenerator.timer.start();
     this.ingredientsGenerator2.timer.start();
   }
+
+  startGeneratingSmoke() {
+    this.smokeGenerator = this.time.events.loop(3000, this.startSmoke, this);
+    //this.smokeGenerator2 = this.time.events.loop(1000, this.startSmoke2, this);
+    this.smokeGenerator.timer.start();
+    //this.smokeGenerator2.timer.start();
+  }
+
+  startSmoke() {
+    console.log(`smoke`);
+    this.smokechecker = this.time.events.loop(2000, this.checkSmoke, this);
+    if (this.smoke) {
+      if (this.smoke.alive === true) {
+        console.log(`kill`);
+        this.smoke.kill();
+        const life = this.lives.getFirstAlive();
+        if (life !== null) {
+          life.kill();
+          // console.log(`life lost`);
+        } else {
+        // console.log(`game Over`);
+        }
+      }
+    }
+    this.smoke = this.add.sprite(this.game.world.centerX - 200, this.game.world.centerY, `tomato`);
+  }
+
   pickIngredient() {
     //isalive functie lost dit op
     if (this.ingredient) {
@@ -197,9 +226,9 @@ class Play extends Phaser.State {
         const life = this.lives.getFirstAlive();
         if (life !== null) {
           life.kill();
-          console.log(`life lost`);
+          // console.log(`life lost`);
         } else {
-          console.log(`game Over`);
+          // console.log(`game Over`);
         }
         // console.log(`-1 leven`);
         // console.log(this.ingredient.alive);
@@ -221,6 +250,20 @@ class Play extends Phaser.State {
     //this.add.sprite(300, 300, item);
   }
 
+  // overcookingPot2() {
+  //   if(this.smoke){
+  //     this.smoke.kill();
+  //     const life2 = this.lives2.getFirstAlive();
+  //
+  //     if (life2 !== null) {
+  //       life2.kill();
+  //       // console.log(`life lost`);
+  //     } else {
+  //       // console.log(`game Over`);
+  //     }
+  //   }
+  // }
+
   pickIngredient2() {
     //isalive functie lost dit op
     if (this.ingredient2) {
@@ -230,9 +273,9 @@ class Play extends Phaser.State {
 
         if (life2 !== null) {
           life2.kill();
-          console.log(`life lost`);
+          // console.log(`life lost`);
         } else {
-          console.log(`game Over`);
+          // console.log(`game Over`);
         }
         // console.log(`-1 leven`);
         // console.log(this.ingredient2.alive);
@@ -254,6 +297,12 @@ class Play extends Phaser.State {
     //this.add.sprite(300, 300, item);
   }
   update() {
+    if (upKey.isDown && this.smoke) {
+      this.smoke.destroy();
+      score += 500;
+      this.scoreField.text = `score${score}`;
+    }
+
     if (buttonTomatoUp && item[0] === `tomato`) {
       this.ingredient.destroy();
       score += 100;
