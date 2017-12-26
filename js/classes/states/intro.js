@@ -9,7 +9,7 @@ class Intro extends Phaser.State {
     this.load.image(`how_button`, `./assets/hoe_button.png`);
     this.load.image(`start_button`, `./assets/start_button.png`);
     this.load.image(`life`, `./assets/life.png`);
-
+    this.game.load.image(`smoke`, `assets/smoke.png`);
     this.game.load.image(`tiles`, `assets/tiles.png`);
     this.game.load.image(`pot`, `assets/cooking_pot.png`);
     this.game.load.image(`carrot`, `assets/carrot.png`);
