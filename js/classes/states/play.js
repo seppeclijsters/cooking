@@ -74,22 +74,16 @@ class Play extends Phaser.State {
   }
 
   overcooking() {
-    console.log(`overcooking`);
-    potOvercooking = true;
-
-    if (potOvercooking === true) {
-      this.startGeneratingSmoke();
-    }
-  }
-
-  startGeneratingSmoke() {
     this.smokeEmitter();
   }
 
   checkingsmoke() {
-    console.log(`checked smoke`);
+    console.log(`cheking smoke`);
+
     if (this.emitter.on === true) {
+      console.log(`emitter wordt uitgezet`);
       this.emitter.on = false;
+
       const life = this.lives.getFirstAlive();
       if (life !== null) {
         life.kill();
@@ -97,17 +91,27 @@ class Play extends Phaser.State {
       } else {
         console.log(`game Over`);
       }
+    } else {
+      console.log(`emitter al uit`);
+      score += 100;
     }
+  }
+
+  startOvercookTimer() {
+    this.overcookingGenerator = this.time.events.loop(15000, this.overcooking, this);
   }
 
   smokeEmitter() {
 
-    if (!this.checkSmoke) {
-      this.checkSmoke = this.time.events.loop(6000, this.checkingsmoke, this);
-    } else {
-      //this.checkSmoke.destroy();
-      console.log(`check`);
+    console.log(`smokeEmitter`);
+    if (this.emitter) {
+      if (this.emitter.on === false) {
+        this.emitter.on = true;
+      }
     }
+    this.checkSmoke = this.time.events.add(5000, this.checkingsmoke, this);
+    this.checkSmoke.autoDestroy = true;
+    console.log(this.checkSmoke);
 
     if (!this.emitter) {
       this.emitter = this.game.add.emitter(this.game.world.centerX - 200, 500, 400);
@@ -120,22 +124,13 @@ class Play extends Phaser.State {
       this.emitter.start(false, 2000, 10);
     }
 
-    if (this.emitter.on === false) {
-      this.emitter.on = true;
-    }
     // if (this.emitter.on === false) {
+    //   console.log(`emitter aan`);
     //   this.emitter.on = true;
     // } else {
     //   this.emitter.on = false;
-    //   const life = this.lives.getFirstAlive();
-    //   if (life !== null) {
-    //     life.kill();
-    //     console.log(`life lost`);
-    //   } else {
-    //     console.log(`game Over`);
-    //   }
     // }
-    console.log(this.emitter);
+    // console.log(this.emitter);
   }
 
   scaleSort(a, b) {
@@ -144,6 +139,8 @@ class Play extends Phaser.State {
 
   stopGeneratingSmoke() {
     console.log(this.emitter);
+    console.log(`emitter uit`);
+
     this.emitter.on = false;
   }
 
@@ -289,10 +286,6 @@ class Play extends Phaser.State {
     this.ingredientsGenerator2 = this.time.events.loop(3000, this.pickIngredient2, this);
     this.ingredientsGenerator.timer.start();
     this.ingredientsGenerator2.timer.start();
-  }
-
-  startOvercookTimer() {
-    this.overcookingGenerator = this.time.events.loop(Math.floor(Math.random() * 12000) + 6000, this.overcooking, this);
   }
 
   pickIngredient() {
