@@ -2,12 +2,15 @@ const Pot = require(`../objects/Pots.js`);
 
 require(`../../johnny_five`);
 const five = require(`johnny-five`);
+
 let buttonTomatoUp = false;
 let buttonMeatUp = false;
 let buttonFishUp = false;
 let buttonPotatoUp = false;
 let buttonEggUp = false;
 let buttonCarrotUp = false;
+let potOvercooking = false;
+console.log(potOvercooking);
 
 const PlayerLives = 3;
 
@@ -20,6 +23,8 @@ let item;
 let item2;
 let score = 0;
 let score2 = 0;
+
+this.emitter;
 
 class Play extends Phaser.State {
   preload() {
@@ -37,6 +42,7 @@ class Play extends Phaser.State {
     this.pickIngredient();
     this.pickIngredient2();
     this.createScore();
+    this.startOvercookTimer();
   }
 
   createLivesPlayer1() {
@@ -59,6 +65,97 @@ class Play extends Phaser.State {
     }
   }
 
+  gecalibreerd() {
+    console.log(`gecalibreerd`);
+  }
+
+  beweging() {
+    console.log(`beweging`);
+  }
+
+  overcooking() {
+    console.log(`overcooking`);
+    potOvercooking = true;
+
+    if (potOvercooking === true) {
+      this.startGeneratingSmoke();
+    }
+  }
+
+  startGeneratingSmoke() {
+    this.smokeEmitter();
+  }
+
+  checkingsmoke() {
+    console.log(`checked smoke`);
+    if (this.emitter.on === true) {
+      this.emitter.on = false;
+      const life = this.lives.getFirstAlive();
+      if (life !== null) {
+        life.kill();
+        console.log(`life lost`);
+      } else {
+        console.log(`game Over`);
+      }
+    }
+  }
+
+  smokeEmitter() {
+
+    if (!this.checkSmoke) {
+      this.checkSmoke = this.time.events.loop(6000, this.checkingsmoke, this);
+    } else {
+      //this.checkSmoke.destroy();
+      console.log(`check`);
+    }
+
+    if (!this.emitter) {
+      this.emitter = this.game.add.emitter(this.game.world.centerX - 200, 500, 400);
+      this.emitter.makeParticles(`smoke`);
+      this.emitter.setScale(0.05, 1, 1);
+      this.emitter.setRotation(0, 0);
+      this.emitter.setAlpha(.2);
+      this.emitter.width = 10;
+      this.emitter.gravity = - 500;
+      this.emitter.start(false, 2000, 10);
+    }
+
+    if (this.emitter.on === false) {
+      this.emitter.on = true;
+    }
+    // if (this.emitter.on === false) {
+    //   this.emitter.on = true;
+    // } else {
+    //   this.emitter.on = false;
+    //   const life = this.lives.getFirstAlive();
+    //   if (life !== null) {
+    //     life.kill();
+    //     console.log(`life lost`);
+    //   } else {
+    //     console.log(`game Over`);
+    //   }
+    // }
+    console.log(this.emitter);
+  }
+
+  scaleSort(a, b) {
+    console.log(a, b);
+  }
+
+  stopGeneratingSmoke() {
+    console.log(this.emitter);
+    this.emitter.on = false;
+  }
+
+  stopOvercooking() {
+    console.log(`stop overcooking`);
+    potOvercooking = false;
+    if (potOvercooking === false) {
+      this.stopGeneratingSmoke();
+    }
+    console.log(potOvercooking);
+  }
+
 
   initButtons() {
     this.board = new five.Board();
@@ -71,23 +168,25 @@ class Play extends Phaser.State {
       // this.buttonCarrot = new five.Button(6);
       // this.buttonPotato = new five.Button(7);
       //
-      // const motion = new five.Motion(8);
+      const motion = new five.Motion(8);
+      //
+        // "calibrated" occurs once, at the beginning of a session,
+      motion.on(`calibrated`, this.gecalibreerd);
+      // "motionstart" events are fired when the "calibrated"
+      // proximal area is disrupted, generally by some form of movement
+      motion.on(`motionstart`, () => {
+        console.log(`motionstart`, Date.now());
+        this.stopOvercooking();
+      });
 
-      // "calibrated" occurs once, at the beginning of a session,
-      // motion.on(`calibrated`, () => {
-      //   console.log(`calibrated`, Date.now());
-      // });
-      //
-      // // "motionstart" events are fired when the "calibrated"
-      // // proximal area is disrupted, generally by some form of movement
-      // motion.on(`motionstart`, () => {
-      //   console.log(`motionstart`, Date.now());
-      // });
-      //
-      // // "motionend" events are fired following a "motionstart" event
-      // // when no movement has occurred in X ms
-      // motion.on(`motionend`, () => {
-      //   console.log(`motionend`, Date.now());
+      // "motionend" events are fired following a "motionstart" event
+      // when no movement has occurred in X ms
+      motion.on(`motionend`, () => {
+        console.log(`motionend`, Date.now());
+      });
+
+      // motion.on(`data`, function(data) {
+      //   console.log(data.detectedMotion);
       // });
       //
       this.buttonTomato.on(`down`, () => {
@@ -145,16 +244,16 @@ class Play extends Phaser.State {
       // });
 
       // Initialize the RGB LED
-      const led = new five.Led.RGB({
-        pins: {
-          red: 10,
-          green: 9,
-          blue: 11
-        }
-      });
-
-      led.on();
-      led.color(`#FF0000`);
+      // const led = new five.Led.RGB({
+      //   pins: {
+      //     red: 10,
+      //     green: 9,
+      //     blue: 11
+      //   }
+      // });
+      //
+      // led.on();
+      // led.color(`#FF0000`);
 
       // led.blink(1000);
     });
@@ -175,7 +274,7 @@ class Play extends Phaser.State {
   }
   background() {
     this.game.stage.backgroundColor = `#FFFFFF`;
-    this.game.add.tileSprite(0, 0, 1500, 600, `tiles`);
+    // this.game.add.tileSprite(0, 0, 1500, 600, `tiles`);
   }
   cookingPots() {
     this.potsTeam1 = this.game.add.group();
@@ -192,30 +291,8 @@ class Play extends Phaser.State {
     this.ingredientsGenerator2.timer.start();
   }
 
-  startGeneratingSmoke() {
-    this.smokeGenerator = this.time.events.loop(3000, this.startSmoke, this);
-    //this.smokeGenerator2 = this.time.events.loop(1000, this.startSmoke2, this);
-    this.smokeGenerator.timer.start();
-    //this.smokeGenerator2.timer.start();
-  }
-
-  startSmoke() {
-    console.log(`smoke`);
-    this.smokechecker = this.time.events.loop(2000, this.checkSmoke, this);
-    if (this.smoke) {
-      if (this.smoke.alive === true) {
-        console.log(`kill`);
-        this.smoke.kill();
-        const life = this.lives.getFirstAlive();
-        if (life !== null) {
-          life.kill();
-          // console.log(`life lost`);
-        } else {
-        // console.log(`game Over`);
-        }
-      }
-    }
-    this.smoke = this.add.sprite(this.game.world.centerX - 200, this.game.world.centerY, `tomato`);
+  startOvercookTimer() {
+    this.overcookingGenerator = this.time.events.loop(Math.floor(Math.random() * 12000) + 6000, this.overcooking, this);
   }
 
   pickIngredient() {
@@ -297,11 +374,7 @@ class Play extends Phaser.State {
     //this.add.sprite(300, 300, item);
   }
   update() {
-    if (upKey.isDown && this.smoke) {
-      this.smoke.destroy();
-      score += 500;
-      this.scoreField.text = `score${score}`;
-    }
+    //this.emitter.customSort(this.scaleSort, this);
 
     if (buttonTomatoUp && item[0] === `tomato`) {
       this.ingredient.destroy();
@@ -352,11 +425,14 @@ class Play extends Phaser.State {
     // }
 
     if (item2[1].isDown) {
+      //this.stopGeneratingSmoke();
+      //this.emitter.on = false;
       this.ingredient2.destroy();
       score2 += 100;
       this.scoreField2.text = `score${score2}`;
     }
   }
+
 }
 
 module.exports = Play;
