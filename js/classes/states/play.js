@@ -36,7 +36,7 @@ class Play extends Phaser.State {
     this.createLivesPlayer1();
     this.createLivesPlayer2();
     this.startGeneratingIngredients();
-    this.startGeneratingSmoke();
+    //this.startGeneratingSmoke();
     this.createLivesPlayer1();
     this.createButtons();
     this.pickIngredient();
@@ -294,16 +294,20 @@ class Play extends Phaser.State {
       if (this.ingredient.alive === true) {
         this.ingredient.kill();
         const life = this.lives.getFirstAlive();
+      //  console.log(this.lives.getFirstAlive());
         if (life !== null) {
           life.kill();
-          // console.log(`life lost`);
+          console.log(`life lost`);
         } else {
+          this.game.state.start(`winner`);
           // console.log(`game Over`);
         }
         // console.log(`-1 leven`);
         // console.log(this.ingredient.alive);
       }
     }
+
+  //  console.log(this.ingredient);
 
     this.items = [
       [`egg`, upKey],
@@ -343,7 +347,7 @@ class Play extends Phaser.State {
 
         if (life2 !== null) {
           life2.kill();
-          // console.log(`life lost`);
+          console.log(`life lost`);
         } else {
           // console.log(`game Over`);
         }
