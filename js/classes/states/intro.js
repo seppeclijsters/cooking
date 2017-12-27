@@ -2,6 +2,8 @@ const Button = require(`../objects/Button.js`);
 const Play = require(`./play.js`);
 const Instruct = require(`./Instruct.js`);
 const winnerPlayer1 = require(`./winner.js`);
+const winnerPlayer2 = require(`./winner2.js`);
+
 
 let counter = 0;
 
@@ -28,6 +30,7 @@ class Intro extends Phaser.State {
     this.game.state.add(`Play`, Play, false);
     this.game.state.add(`Instruct`, Instruct, false);
     this.game.state.add(`winner`, winnerPlayer1, false);
+    this.game.state.add(`winner2`, winnerPlayer2, false);
   }
   create() {
     this.middleX = this.game.world.centerX;

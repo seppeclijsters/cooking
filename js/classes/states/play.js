@@ -77,6 +77,10 @@ class Play extends Phaser.State {
     this.smokeEmitter();
   }
 
+  overcooking2() {
+    this.smokeEmitter2();
+  }
+
   checkingsmoke() {
     console.log(`cheking smoke`);
 
@@ -97,8 +101,30 @@ class Play extends Phaser.State {
     }
   }
 
+  checkingsmoke2() {
+    console.log(`cheking smoke2`);
+
+    if (this.emitter2.on === true) {
+      console.log(`emitter wordt uitgezet`);
+      this.emitter2.on = false;
+
+      const life = this.lives.getFirstAlive();
+      if (life !== null) {
+        life.kill();
+        console.log(`life lost`);
+      } else {
+        console.log(`game Over`);
+      }
+    } else {
+      console.log(`emitter al uit`);
+      score += 100;
+    }
+  }
+
   startOvercookTimer() {
     this.overcookingGenerator = this.time.events.loop(15000, this.overcooking, this);
+    this.overcookingGenerator2 = this.time.events.loop(15000, this.overcooking2, this);
+
   }
 
   smokeEmitter() {
@@ -122,6 +148,38 @@ class Play extends Phaser.State {
       this.emitter.width = 10;
       this.emitter.gravity = - 500;
       this.emitter.start(false, 2000, 10);
+    }
+
+    // if (this.emitter.on === false) {
+    //   console.log(`emitter aan`);
+    //   this.emitter.on = true;
+    // } else {
+    //   this.emitter.on = false;
+    // }
+    // console.log(this.emitter);
+  }
+
+  smokeEmitter2() {
+
+    console.log(`smokeEmitter`);
+    if (this.emitter2) {
+      if (this.emitter2.on === false) {
+        this.emitter2.on = true;
+      }
+    }
+    this.checkSmoke = this.time.events.add(5000, this.checkingsmoke2, this);
+    this.checkSmoke.autoDestroy = true;
+    console.log(this.checkSmoke);
+
+    if (!this.emitter2) {
+      this.emitter2 = this.game.add.emitter(this.game.world.centerX + 200, 500, 400);
+      this.emitter2.makeParticles(`smoke`);
+      this.emitter2.setScale(0.05, 1, 1);
+      this.emitter2.setRotation(0, 0);
+      this.emitter2.setAlpha(.2);
+      this.emitter2.width = 10;
+      this.emitter2.gravity = - 500;
+      this.emitter2.start(false, 2000, 10);
     }
 
     // if (this.emitter.on === false) {
@@ -299,7 +357,7 @@ class Play extends Phaser.State {
           life.kill();
           console.log(`life lost`);
         } else {
-          this.game.state.start(`winner`);
+          //this.game.state.start(`winner`);
           // console.log(`game Over`);
         }
         // console.log(`-1 leven`);
@@ -349,6 +407,7 @@ class Play extends Phaser.State {
           life2.kill();
           console.log(`life lost`);
         } else {
+          //this.game.state.start(`winner2`);
           // console.log(`game Over`);
         }
         // console.log(`-1 leven`);
