@@ -91,21 +91,21 @@ class Play extends Phaser.State {
   }
 
   checkingsmoke() {
-    console.log(`checked smoke`);
+    // console.log(`checked smoke`);
     if (this.emitter.on === true) {
       this.emitter.on = false;
       const life = this.lives.getFirstAlive();
       if (life !== null) {
         life.kill();
-        console.log(`life lost`);
+        // console.log(`life lost`);
       } else {
-        console.log(`game Over`);
+        // console.log(`game Over`);
       }
     }
   }
 
   checkingsmoke2() {
-    console.log(`cheking smoke2`);
+    // console.log(`cheking smoke2`);
 
     if (this.emitter2.on === true) {
       console.log(`emitter wordt uitgezet`);
@@ -114,9 +114,9 @@ class Play extends Phaser.State {
       const life = this.lives.getFirstAlive();
       if (life !== null) {
         life.kill();
-        console.log(`life lost`);
+        // console.log(`life lost`);
       } else {
-        console.log(`game Over`);
+        // console.log(`game Over`);
       }
     } else {
       console.log(`emitter al uit`);
@@ -221,31 +221,146 @@ class Play extends Phaser.State {
 
   initButtons() {
     // this.board = new five.Board();
+    // console.log(this.board);
     // const ports = [
-    //   {port: `/dev/cu.wchusbserial1410`},
-    //   {port: `/dev/cu.wchusbserial1420`}
+    //   {id: `A`, port: `/dev/cu.wchusbserial1410`},
+    //   {id: `B`, port: `/dev/cu.wchusbserial1420`}
     // ];
+
     // console.log(ports);
     // this.boards = new five.Boards([`A`, `B`]);
     // console.log(this.boards);
     //console.log(this.boards);
-    // this.boards[1].isConnected = true;
-    // this.boards[1].isReady = true;
+
+
+    const boards = new five.Boards([`A`, `B`]).on(`ready`, () => {
+      console.log(boards);
+      boards.each(board => {
+        if (board.id === `B`) {
+          console.log(`hey`);
+          const led = new five.Led.RGB({
+            pins: {
+              red: 9,
+              green: 10,
+              blue: 11,
+            },
+            board
+          });
+          //
+          led.on();
+          led.color(`#FF0000`);
+          // //
+          led.blink(1000);
+
+          // this.buttonTomato = new five.Button({
+          //   pin: 2,
+          //   board
+          // });
+          //
+          // this.buttonMeat = new five.Button({
+          //   pin: 3,
+          //   board
+          // });
+          //
+          // this.buttonTomato.on(`down`, () => {
+          //   buttonTomatoUp = true;
+          //   console.log(`buttonTomato`);
+          // });
+          //
+          // this.buttonTomato.on(`up`, () => {
+          //   buttonTomatoUp = false;
+          // });
+          //
+          // this.buttonMeat.on(`down`, () => {
+          //   buttonMeatUp = true;
+          //   console.log(`buttonMeat`);
+          // });
+          //
+          // this.buttonMeat.on(`up`, () => {
+          //   buttonMeatUp = false;
+          // });
+
+          // this.buttonEgg.on(`down`, () => {
+          //   buttonEggUp = true;
+          //   // console.log(`buttonEgg`);
+          // });
+          //
+          // this.buttonEgg.on(`up`, () => {
+          //   buttonEggUp = false;
+          // });
+          //
+          // this.buttonFish.on(`down`, () => {
+          //   buttonFishUp = true;
+          //   console.log(`buttonFish`);
+          // });
+          //
+          // this.buttonFish.on(`up`, () => {
+          //   buttonFishUp = false;
+          // });
+          //
+          // this.buttonCarrot.on(`down`, () => {
+          //   buttonCarrotUp = true;
+          //   console.log(`buttonCarrot`);
+          // });
+          //
+          // this.buttonCarrot.on(`up`, () => {
+          //   buttonCarrotUp = false;
+          // });
+          //
+          // this.buttonPotato.on(`down`, () => {
+          //   buttonPotatoUp = true;
+          //   console.log(`buttonPotato`);
+          // });
+          //
+          // this.buttonPotato.on(`up`, () => {
+          //   buttonPotatoUp = false;
+          // });
+
+          const motion = new five.Motion(8);
+          //
+            // "calibrated" occurs once, at the beginning of a session,
+          motion.on(`calibrated`, this.gecalibreerd);
+          // "motionstart" events are fired when the "calibrated"
+          // proximal area is disrupted, generally by some form of movement
+          motion.on(`motionstart`, () => {
+            console.log(`motionstart`, Date.now());
+            this.stopOvercooking();
+          });
+
+          // "motionend" events are fired following a "motionstart" event
+          // when no movement has occurred in X ms
+          motion.on(`motionend`, () => {
+            console.log(`motionend`, Date.now());
+          });
+
+          motion.on(`data`, function(data) {
+            console.log(data.detectedMotion);
+          });
+        }
+
+        if (board.id === `A`) {
+          // this.buttonTomato = new five.Button({
+          //   pin: 2,
+          //   board
+          // });
+        }
+      });
 
 
     // this.board.on(`ready`, () => {
-    new five.Boards([ `A`, `B` ]).on(`ready`, () => {
-    // new five.Boards(ports).on(`ready`, () => {
-      console.log(`ready`);
+    // // new five.Board(ports[0].id).on(`ready`, () => {
+    // // new five.Boards(ports).on(`ready`, () => {
+    //
+    // });
     //   this.each(function(board) {
     //
-    // // Initialize an Led instance on pin 13 of
-    // // each initialized board and strobe it.
-    //     new five.button({pin: 2, board: board});
-    //   });
-    //   // console.log(`button ${new five.Button}`);
-    //   this.buttonTomato = new five.Button(2);
-    //   console.log(this.buttonTomato);
+
+      // ports.each(function(board) {
+      //
+      // // Initialize an Led instance on pin 13 of
+      // // each initialized board and strobe it.
+      //   new five.Led({pin: 13, board: board}).strobe();
+      // });
       // this.buttonTomato = new five.Button(2);
       // console.log(this.buttonTomato);
       // this.buttonTomato = new five.Button({
@@ -259,35 +374,16 @@ class Play extends Phaser.State {
       // this.buttonCarrot = new five.Button(6);
       // this.buttonPotato = new five.Button(7);
       //
-      // const motion = new five.Motion(8);
-      // //
-      //   // "calibrated" occurs once, at the beginning of a session,
-      // motion.on(`calibrated`, this.gecalibreerd);
-      // // "motionstart" events are fired when the "calibrated"
-      // // proximal area is disrupted, generally by some form of movement
-      // motion.on(`motionstart`, () => {
-      //   console.log(`motionstart`, Date.now());
-      //   this.stopOvercooking();
+
+      //
+      // this.buttonTomato.on(`down`, () => {
+      //   buttonTomatoUp = true;
+      //   console.log(`buttonTomato`);
       // });
       //
-      // // "motionend" events are fired following a "motionstart" event
-      // // when no movement has occurred in X ms
-      // motion.on(`motionend`, () => {
-      //   console.log(`motionend`, Date.now());
+      // this.buttonTomato.on(`up`, () => {
+      //   buttonTomatoUp = false;
       // });
-
-      // motion.on(`data`, function(data) {
-      //   console.log(data.detectedMotion);
-      // });
-      //
-      this.buttonTomato.on(`down`, () => {
-        buttonTomatoUp = true;
-        console.log(`buttonTomato`);
-      });
-
-      this.buttonTomato.on(`up`, () => {
-        buttonTomatoUp = false;
-      });
 
       // this.buttonMeat.on(`down`, () => {
       //   buttonMeatUp = true;
@@ -396,7 +492,7 @@ class Play extends Phaser.State {
       //  console.log(this.lives.getFirstAlive());
         if (life !== null) {
           life.kill();
-          console.log(`life lost`);
+          // console.log(`life lost`);
         } else {
           //this.game.state.start(`winner`);
           // console.log(`game Over`);
