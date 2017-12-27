@@ -107,7 +107,7 @@ class Intro extends Phaser.State {
 
     this.fish = this.game.add.sprite(this.middleX - 150, this.middleY + 150, `fish`);
     this.fish.anchor.set(0.5);
-    this.game.add.tween(this.fish).to({angle: 360}, 2400, Phaser.Easing.Cubic.In, true, - 1, 0);
+    this.game.add.tween(this.fish).to({angle: 360}, 2900, Phaser.Easing.Cubic.In, true, - 1, 0);
 
     this.potato = this.game.add.sprite(this.middleX - 150, this.middleY + 180, `potato`);
     this.potato.anchor.set(0.5);
