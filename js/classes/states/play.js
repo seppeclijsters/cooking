@@ -3,6 +3,7 @@ const Pot = require(`../objects/Pots.js`);
 require(`../../johnny_five`);
 const five = require(`johnny-five`);
 
+let led;
 let buttonTomatoUp = false;
 let buttonMeatUp = false;
 let buttonFishUp = false;
@@ -10,6 +11,8 @@ let buttonPotatoUp = false;
 let buttonEggUp = false;
 let buttonCarrotUp = false;
 let potOvercooking = false;
+
+let buttonTomatoUp2 = false;
 console.log(potOvercooking);
 
 const PlayerLives = 3;
@@ -76,6 +79,7 @@ class Play extends Phaser.State {
   overcooking() {
     console.log(`overcooking`);
     potOvercooking = true;
+    led.blink(500);
 
     if (potOvercooking === true) {
       this.startGeneratingSmoke();
@@ -236,9 +240,10 @@ class Play extends Phaser.State {
     const boards = new five.Boards([`A`, `B`]).on(`ready`, () => {
       console.log(boards);
       boards.each(board => {
-        if (board.id === `B`) {
+
+        if (board.id === `A`) {
           console.log(`hey`);
-          const led = new five.Led.RGB({
+          led = new five.Led.RGB({
             pins: {
               red: 9,
               green: 10,
@@ -246,74 +251,113 @@ class Play extends Phaser.State {
             },
             board
           });
-          //
-          led.on();
           led.color(`#FF0000`);
-          // //
-          led.blink(1000);
+          led.on();
+          // led.color(`#FF0000`);
 
-          // this.buttonTomato = new five.Button({
+          // led.blink(1500);
+
+          this.buttonTomato = new five.Button({
+            pin: 2,
+            board
+          });
+
+          this.buttonMeat = new five.Button({
+            pin: 3,
+            board
+          });
+
+          this.buttonEgg = new five.Button({
+            pin: 4,
+            board
+          });
+
+          this.buttonFish = new five.Button({
+            pin: 5,
+            board
+          });
+
+          this.buttonCarrot = new five.Button({
+            pin: 6,
+            board
+          });
+
+          // this.buttonPotato = new five.Button(7);
+          this.buttonPotato = new five.Button({
+            pin: 7,
+            board
+          });
+
+          this.buttonTomato.on(`down`, () => {
+            buttonTomatoUp = true;
+            console.log(`buttonTomato`);
+          });
+
+          this.buttonTomato.on(`up`, () => {
+            buttonTomatoUp = false;
+          });
+
+          this.buttonMeat.on(`down`, () => {
+            buttonMeatUp = true;
+            console.log(`buttonMeat`);
+          });
+
+          this.buttonMeat.on(`up`, () => {
+            buttonMeatUp = false;
+          });
+
+          this.buttonEgg.on(`down`, () => {
+            buttonEggUp = true;
+            console.log(`buttonEgg`);
+          });
+
+          this.buttonEgg.on(`up`, () => {
+            buttonEggUp = false;
+          });
+
+          this.buttonFish.on(`down`, () => {
+            buttonFishUp = true;
+            console.log(`buttonFish`);
+          });
+
+          this.buttonFish.on(`up`, () => {
+            buttonFishUp = false;
+          });
+
+          this.buttonCarrot.on(`down`, () => {
+            buttonCarrotUp = true;
+            console.log(`buttonCarrot`);
+          });
+
+          this.buttonCarrot.on(`up`, () => {
+            buttonCarrotUp = false;
+          });
+
+          this.buttonPotato.on(`down`, () => {
+            buttonPotatoUp = true;
+            console.log(`buttonPotato`);
+          });
+
+          this.buttonPotato.on(`up`, () => {
+            buttonPotatoUp = false;
+          });
+
+
+        }
+
+        if (board.id === `B`) {
+          // this.buttonTomato2 = new five.Button({
           //   pin: 2,
           //   board
           // });
           //
-          // this.buttonMeat = new five.Button({
-          //   pin: 3,
-          //   board
+          // this.buttonTomato2.on(`down`, () => {
+          //   buttonTomatoUp2 = true;
+          //   console.log(`buttonTomato2`);
           // });
           //
-          // this.buttonTomato.on(`down`, () => {
-          //   buttonTomatoUp = true;
-          //   console.log(`buttonTomato`);
-          // });
-          //
-          // this.buttonTomato.on(`up`, () => {
-          //   buttonTomatoUp = false;
-          // });
-          //
-          // this.buttonMeat.on(`down`, () => {
-          //   buttonMeatUp = true;
-          //   console.log(`buttonMeat`);
-          // });
-          //
-          // this.buttonMeat.on(`up`, () => {
-          //   buttonMeatUp = false;
-          // });
-
-          // this.buttonEgg.on(`down`, () => {
-          //   buttonEggUp = true;
-          //   // console.log(`buttonEgg`);
-          // });
-          //
-          // this.buttonEgg.on(`up`, () => {
-          //   buttonEggUp = false;
-          // });
-          //
-          // this.buttonFish.on(`down`, () => {
-          //   buttonFishUp = true;
-          //   console.log(`buttonFish`);
-          // });
-          //
-          // this.buttonFish.on(`up`, () => {
-          //   buttonFishUp = false;
-          // });
-          //
-          // this.buttonCarrot.on(`down`, () => {
-          //   buttonCarrotUp = true;
-          //   console.log(`buttonCarrot`);
-          // });
-          //
-          // this.buttonCarrot.on(`up`, () => {
-          //   buttonCarrotUp = false;
-          // });
-          //
-          // this.buttonPotato.on(`down`, () => {
-          //   buttonPotatoUp = true;
-          //   console.log(`buttonPotato`);
-          // });
-          //
-          // this.buttonPotato.on(`up`, () => {
-          //   buttonPotatoUp = false;
+          // this.buttonTomato2.on(`up`, () => {
+          //   buttonTomatoUp2 = false;
           // });
 
           const motion = new five.Motion(8);
@@ -336,13 +380,6 @@ class Play extends Phaser.State {
           motion.on(`data`, function(data) {
             console.log(data.detectedMotion);
           });
-        }
-
-        if (board.id === `A`) {
-          // this.buttonTomato = new five.Button({
-          //   pin: 2,
-          //   board
-          // });
         }
       });
 
