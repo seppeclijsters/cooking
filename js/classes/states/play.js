@@ -1,18 +1,18 @@
 const Pot = require(`../objects/Pots.js`);
 
 require(`../../johnny_five`);
-const five = require(`johnny-five`);
+//const five = require(`johnny-five`);
 
 let led;
-let buttonTomatoUp = false;
-let buttonMeatUp = false;
-let buttonFishUp = false;
-let buttonPotatoUp = false;
-let buttonEggUp = false;
-let buttonCarrotUp = false;
+//let buttonTomatoUp = false;
+// let buttonMeatUp = false;
+// let buttonFishUp = false;
+// let buttonPotatoUp = false;
+// let buttonEggUp = false;
+// let buttonCarrotUp = false;
 let potOvercooking = false;
 
-let buttonTomatoUp2 = false;
+//let buttonTomatoUp2 = false;
 console.log(potOvercooking);
 
 const PlayerLives = 3;
@@ -79,7 +79,8 @@ class Play extends Phaser.State {
   overcooking() {
     console.log(`overcooking`);
     potOvercooking = true;
-    led.blink(500);
+    // console.log(this.game.global.led);
+    this.game.global.led.blink(500);
 
     if (potOvercooking === true) {
       this.startGeneratingSmoke();
@@ -224,264 +225,251 @@ class Play extends Phaser.State {
 
 
   initButtons() {
-    // this.board = new five.Board();
-    // console.log(this.board);
-    // const ports = [
-    //   {id: `A`, port: `/dev/cu.wchusbserial1410`},
-    //   {id: `B`, port: `/dev/cu.wchusbserial1420`}
-    // ];
-
-    // console.log(ports);
-    // this.boards = new five.Boards([`A`, `B`]);
-    // console.log(this.boards);
-    //console.log(this.boards);
-
-
-    const boards = new five.Boards([`A`, `B`]).on(`ready`, () => {
-      console.log(boards);
-      boards.each(board => {
-
-        if (board.id === `A`) {
-          console.log(`hey`);
-          led = new five.Led.RGB({
-            pins: {
-              red: 9,
-              green: 10,
-              blue: 11,
-            },
-            board
-          });
-          led.color(`#FF0000`);
-          led.on();
-          // led.color(`#FF0000`);
-
-          // led.blink(1500);
-
-          this.buttonTomato = new five.Button({
-            pin: 2,
-            board
-          });
-
-          this.buttonMeat = new five.Button({
-            pin: 3,
-            board
-          });
-
-          this.buttonEgg = new five.Button({
-            pin: 4,
-            board
-          });
-
-          this.buttonFish = new five.Button({
-            pin: 5,
-            board
-          });
-
-          this.buttonCarrot = new five.Button({
-            pin: 6,
-            board
-          });
-
-          // this.buttonPotato = new five.Button(7);
-          this.buttonPotato = new five.Button({
-            pin: 7,
-            board
-          });
-
-          this.buttonTomato.on(`down`, () => {
-            buttonTomatoUp = true;
-            console.log(`buttonTomato`);
-          });
-
-          this.buttonTomato.on(`up`, () => {
-            buttonTomatoUp = false;
-          });
-
-          this.buttonMeat.on(`down`, () => {
-            buttonMeatUp = true;
-            console.log(`buttonMeat`);
-          });
-
-          this.buttonMeat.on(`up`, () => {
-            buttonMeatUp = false;
-          });
-
-          this.buttonEgg.on(`down`, () => {
-            buttonEggUp = true;
-            console.log(`buttonEgg`);
-          });
-
-          this.buttonEgg.on(`up`, () => {
-            buttonEggUp = false;
-          });
-
-          this.buttonFish.on(`down`, () => {
-            buttonFishUp = true;
-            console.log(`buttonFish`);
-          });
-
-          this.buttonFish.on(`up`, () => {
-            buttonFishUp = false;
-          });
-
-          this.buttonCarrot.on(`down`, () => {
-            buttonCarrotUp = true;
-            console.log(`buttonCarrot`);
-          });
-
-          this.buttonCarrot.on(`up`, () => {
-            buttonCarrotUp = false;
-          });
-
-          this.buttonPotato.on(`down`, () => {
-            buttonPotatoUp = true;
-            console.log(`buttonPotato`);
-          });
-
-          this.buttonPotato.on(`up`, () => {
-            buttonPotatoUp = false;
-          });
-
-
-        }
-
-        if (board.id === `B`) {
-          // this.buttonTomato2 = new five.Button({
-          //   pin: 2,
-          //   board
-          // });
-          //
-          // this.buttonTomato2.on(`down`, () => {
-          //   buttonTomatoUp2 = true;
-          //   console.log(`buttonTomato2`);
-          // });
-          //
-          // this.buttonTomato2.on(`up`, () => {
-          //   buttonTomatoUp2 = false;
-          // });
-
-          const motion = new five.Motion(8);
-          //
-            // "calibrated" occurs once, at the beginning of a session,
-          motion.on(`calibrated`, this.gecalibreerd);
-          // "motionstart" events are fired when the "calibrated"
-          // proximal area is disrupted, generally by some form of movement
-          motion.on(`motionstart`, () => {
-            console.log(`motionstart`, Date.now());
-            this.stopOvercooking();
-          });
-
-          // "motionend" events are fired following a "motionstart" event
-          // when no movement has occurred in X ms
-          motion.on(`motionend`, () => {
-            console.log(`motionend`, Date.now());
-          });
-
-          motion.on(`data`, function(data) {
-            console.log(data.detectedMotion);
-          });
-        }
-      });
-
-
-    // this.board.on(`ready`, () => {
-    // // new five.Board(ports[0].id).on(`ready`, () => {
-    // // new five.Boards(ports).on(`ready`, () => {
+    // const boards = new five.Boards([`A`, `B`]).on(`ready`, () => {
+    //   console.log(boards);
+    //   boards.each(board => {
     //
+    //     if (board.id === `A`) {
+    //       console.log(`hey`);
+    //       led = new five.Led.RGB({
+    //         pins: {
+    //           red: 9,
+    //           green: 10,
+    //           blue: 11,
+    //         },
+    //         board
+    //       });
+    //       led.color(`#FF0000`);
+    //       led.on();
+    //       // led.color(`#FF0000`);
+    //
+    //       // led.blink(1500);
+    //
+    //       this.buttonTomato = new five.Button({
+    //         pin: 2,
+    //         board
+    //       });
+    //
+    //       this.buttonMeat = new five.Button({
+    //         pin: 3,
+    //         board
+    //       });
+    //
+    //       this.buttonEgg = new five.Button({
+    //         pin: 4,
+    //         board
+    //       });
+    //
+    //       this.buttonFish = new five.Button({
+    //         pin: 5,
+    //         board
+    //       });
+    //
+    //       this.buttonCarrot = new five.Button({
+    //         pin: 6,
+    //         board
+    //       });
+    //
+    //       // this.buttonPotato = new five.Button(7);
+    //       this.buttonPotato = new five.Button({
+    //         pin: 7,
+    //         board
+    //       });
+    //
+    //       this.buttonTomato.on(`down`, () => {
+    //         buttonTomatoUp = true;
+    //         console.log(`buttonTomato`);
+    //       });
+    //
+    //       this.buttonTomato.on(`up`, () => {
+    //         buttonTomatoUp = false;
+    //       });
+    //
+    //       this.buttonMeat.on(`down`, () => {
+    //         buttonMeatUp = true;
+    //         console.log(`buttonMeat`);
+    //       });
+    //
+    //       this.buttonMeat.on(`up`, () => {
+    //         buttonMeatUp = false;
+    //       });
+    //
+    //       this.buttonEgg.on(`down`, () => {
+    //         buttonEggUp = true;
+    //         console.log(`buttonEgg`);
+    //       });
+    //
+    //       this.buttonEgg.on(`up`, () => {
+    //         buttonEggUp = false;
+    //       });
+    //
+    //       this.buttonFish.on(`down`, () => {
+    //         buttonFishUp = true;
+    //         console.log(`buttonFish`);
+    //       });
+    //
+    //       this.buttonFish.on(`up`, () => {
+    //         buttonFishUp = false;
+    //       });
+    //
+    //       this.buttonCarrot.on(`down`, () => {
+    //         buttonCarrotUp = true;
+    //         console.log(`buttonCarrot`);
+    //       });
+    //
+    //       this.buttonCarrot.on(`up`, () => {
+    //         buttonCarrotUp = false;
+    //       });
+    //
+    //       this.buttonPotato.on(`down`, () => {
+    //         buttonPotatoUp = true;
+    //         console.log(`buttonPotato`);
+    //       });
+    //
+    //       this.buttonPotato.on(`up`, () => {
+    //         buttonPotatoUp = false;
+    //       });
+    //
+    //
+    //     }
+    //
+    //     if (board.id === `B`) {
+    //       // this.buttonTomato2 = new five.Button({
+    //       //   pin: 2,
+    //       //   board
+    //       // });
+    //       //
+    //       // this.buttonTomato2.on(`down`, () => {
+    //       //   buttonTomatoUp2 = true;
+    //       //   console.log(`buttonTomato2`);
+    //       // });
+    //       //
+    //       // this.buttonTomato2.on(`up`, () => {
+    //       //   buttonTomatoUp2 = false;
+    //       // });
+    //
+    //       // const motion = new five.Motion(8);
+    //       // //
+    //       //   // "calibrated" occurs once, at the beginning of a session,
+    //       // motion.on(`calibrated`, this.gecalibreerd);
+    //       // // "motionstart" events are fired when the "calibrated"
+    //       // // proximal area is disrupted, generally by some form of movement
+    //       // motion.on(`motionstart`, () => {
+    //       //   console.log(`motionstart`, Date.now());
+    //       //   this.stopOvercooking();
+    //       // });
+    //       //
+    //       // // "motionend" events are fired following a "motionstart" event
+    //       // // when no movement has occurred in X ms
+    //       // motion.on(`motionend`, () => {
+    //       //   console.log(`motionend`, Date.now());
+    //       // });
+    //       //
+    //       // motion.on(`data`, function(data) {
+    //       //   console.log(data.detectedMotion);
+    //       // });
+    //     }
+    //   });
+    //
+    //
+    // // this.board.on(`ready`, () => {
+    // // // new five.Board(ports[0].id).on(`ready`, () => {
+    // // // new five.Boards(ports).on(`ready`, () => {
+    // //
+    // // });
+    // //   this.each(function(board) {
+    // //
+    //
+    //   // ports.each(function(board) {
+    //   //
+    //   // // Initialize an Led instance on pin 13 of
+    //   // // each initialized board and strobe it.
+    //   //   new five.Led({pin: 13, board: board}).strobe();
+    //   // });
+    //   // this.buttonTomato = new five.Button(2);
+    //   // console.log(this.buttonTomato);
+    //   // this.buttonTomato = new five.Button({
+    //   //   pin: 2,
+    //   //   board: this.boards[0].id
+    //   // });
+    //
+    //   // this.buttonMeat = new five.Button(3);
+    //   // this.buttonEgg = new five.Button(4);
+    //   // this.buttonFish = new five.Button(5);
+    //   // this.buttonCarrot = new five.Button(6);
+    //   // this.buttonPotato = new five.Button(7);
+    //   //
+    //
+    //   //
+    //   // this.buttonTomato.on(`down`, () => {
+    //   //   buttonTomatoUp = true;
+    //   //   console.log(`buttonTomato`);
+    //   // });
+    //   //
+    //   // this.buttonTomato.on(`up`, () => {
+    //   //   buttonTomatoUp = false;
+    //   // });
+    //
+    //   // this.buttonMeat.on(`down`, () => {
+    //   //   buttonMeatUp = true;
+    //   //   console.log(`buttonMeat`);
+    //   // });
+    //   //
+    //   // this.buttonMeat.on(`up`, () => {
+    //   //   buttonMeatUp = false;
+    //   // });
+    //   //
+    //   // this.buttonEgg.on(`down`, () => {
+    //   //   buttonEggUp = true;
+    //   //   // console.log(`buttonEgg`);
+    //   // });
+    //   //
+    //   // this.buttonEgg.on(`up`, () => {
+    //   //   buttonEggUp = false;
+    //   // });
+    //   //
+    //   // this.buttonFish.on(`down`, () => {
+    //   //   buttonFishUp = true;
+    //   //   console.log(`buttonFish`);
+    //   // });
+    //   //
+    //   // this.buttonFish.on(`up`, () => {
+    //   //   buttonFishUp = false;
+    //   // });
+    //   //
+    //   // this.buttonCarrot.on(`down`, () => {
+    //   //   buttonCarrotUp = true;
+    //   //   console.log(`buttonCarrot`);
+    //   // });
+    //   //
+    //   // this.buttonCarrot.on(`up`, () => {
+    //   //   buttonCarrotUp = false;
+    //   // });
+    //   //
+    //   // this.buttonPotato.on(`down`, () => {
+    //   //   buttonPotatoUp = true;
+    //   //   console.log(`buttonPotato`);
+    //   // });
+    //   //
+    //   // this.buttonPotato.on(`up`, () => {
+    //   //   buttonPotatoUp = false;
+    //   // });
+    //
+    //   // Initialize the RGB LED
+    //   // const led = new five.Led.RGB({
+    //   //   pins: {
+    //   //     red: 9,
+    //   //     green: 10,
+    //   //     blue: 11,
+    //   //   },
+    //   //   // board: this[1]
+    //   // });
+    //   // // //
+    //   // led.on();
+    //   // led.color(`#FF0000`);
+    //   // //
+    //   // led.blink(1000);
     // });
-    //   this.each(function(board) {
-    //
-
-      // ports.each(function(board) {
-      //
-      // // Initialize an Led instance on pin 13 of
-      // // each initialized board and strobe it.
-      //   new five.Led({pin: 13, board: board}).strobe();
-      // });
-      // this.buttonTomato = new five.Button(2);
-      // console.log(this.buttonTomato);
-      // this.buttonTomato = new five.Button({
-      //   pin: 2,
-      //   board: this.boards[0].id
-      // });
-
-      // this.buttonMeat = new five.Button(3);
-      // this.buttonEgg = new five.Button(4);
-      // this.buttonFish = new five.Button(5);
-      // this.buttonCarrot = new five.Button(6);
-      // this.buttonPotato = new five.Button(7);
-      //
-
-      //
-      // this.buttonTomato.on(`down`, () => {
-      //   buttonTomatoUp = true;
-      //   console.log(`buttonTomato`);
-      // });
-      //
-      // this.buttonTomato.on(`up`, () => {
-      //   buttonTomatoUp = false;
-      // });
-
-      // this.buttonMeat.on(`down`, () => {
-      //   buttonMeatUp = true;
-      //   console.log(`buttonMeat`);
-      // });
-      //
-      // this.buttonMeat.on(`up`, () => {
-      //   buttonMeatUp = false;
-      // });
-      //
-      // this.buttonEgg.on(`down`, () => {
-      //   buttonEggUp = true;
-      //   // console.log(`buttonEgg`);
-      // });
-      //
-      // this.buttonEgg.on(`up`, () => {
-      //   buttonEggUp = false;
-      // });
-      //
-      // this.buttonFish.on(`down`, () => {
-      //   buttonFishUp = true;
-      //   console.log(`buttonFish`);
-      // });
-      //
-      // this.buttonFish.on(`up`, () => {
-      //   buttonFishUp = false;
-      // });
-      //
-      // this.buttonCarrot.on(`down`, () => {
-      //   buttonCarrotUp = true;
-      //   console.log(`buttonCarrot`);
-      // });
-      //
-      // this.buttonCarrot.on(`up`, () => {
-      //   buttonCarrotUp = false;
-      // });
-      //
-      // this.buttonPotato.on(`down`, () => {
-      //   buttonPotatoUp = true;
-      //   console.log(`buttonPotato`);
-      // });
-      //
-      // this.buttonPotato.on(`up`, () => {
-      //   buttonPotatoUp = false;
-      // });
-
-      // Initialize the RGB LED
-      // const led = new five.Led.RGB({
-      //   pins: {
-      //     red: 9,
-      //     green: 10,
-      //     blue: 11,
-      //   },
-      //   // board: this[1]
-      // });
-      // // //
-      // led.on();
-      // led.color(`#FF0000`);
-      // //
-      // led.blink(1000);
-    });
 
   }
 
@@ -545,7 +533,7 @@ class Play extends Phaser.State {
       [`egg`, upKey],
       [`meat`, downKey],
       [`fish`, leftKey],
-      [`tomato`, buttonTomatoUp],
+      [`tomato`, this.game.global.buttonTomatoUp],
       [`potato`, rightKey],
       [`carrot`, downKey]
     ];
@@ -606,46 +594,47 @@ class Play extends Phaser.State {
   update() {
     //this.emitter.customSort(this.scaleSort, this);
 
-    if (buttonTomatoUp && item[0] === `tomato`) {
+    if (this.game.global.buttonTomatoUp && item[0] === `tomato`) {
+      console.log(this.game.global.buttonTomatoUp);
       this.ingredient.destroy();
       score += 100;
       this.scoreField.text = `score${score}`;
-      buttonTomatoUp = false;
+      this.game.global.buttonTomatoUp = false;
     }
 
-    if (buttonMeatUp && item[0] === `meat`) {
+    if (this.game.global.buttonMeatUp && item[0] === `meat`) {
       this.ingredient.destroy();
       score += 100;
       this.scoreField.text = `score${score}`;
-      buttonMeatUp = false;
+      this.game.global.buttonMeatUp = false;
     }
 
-    if (buttonEggUp && item[0] === `egg`) {
+    if (this.game.global.buttonEggUp && item[0] === `egg`) {
       this.ingredient.destroy();
       score += 100;
       this.scoreField.text = `score${score}`;
-      buttonEggUp = false;
+      this.game.global.buttonEggUp = false;
     }
 
-    if (buttonFishUp && item[0] === `fish`) {
+    if (this.game.global.buttonFishUp && item[0] === `fish`) {
       this.ingredient.destroy();
       score += 100;
       this.scoreField.text = `score${score}`;
-      buttonFishUp = false;
+      this.game.global.buttonFishUp = false;
     }
 
-    if (buttonCarrotUp && item[0] === `carrot`) {
+    if (this.game.global.buttonCarrotUp && item[0] === `carrot`) {
       this.ingredient.destroy();
       score += 100;
       this.scoreField.text = `score${score}`;
-      buttonCarrotUp = false;
+      this.game.global.buttonCarrotUp = false;
     }
 
-    if (buttonPotatoUp && item[0] === `potato`) {
+    if (this.game.global.buttonPotatoUp && item[0] === `potato`) {
       this.ingredient.destroy();
       score += 100;
       this.scoreField.text = `score${score}`;
-      buttonPotatoUp = false;
+      this.game.global.buttonPotatoUp = false;
     }
     // if (item[1] === true) {
     //   console.log(item[1]);

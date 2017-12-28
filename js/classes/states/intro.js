@@ -4,8 +4,13 @@ const Instruct = require(`./Instruct.js`);
 const winnerPlayer1 = require(`./winner.js`);
 const winnerPlayer2 = require(`./winner2.js`);
 
+require(`../../johnny_five`);
+const five = require(`johnny-five`);
+//let led;
+
 
 let counter = 0;
+//let buttonTomatoUp;
 
 class Intro extends Phaser.State {
   preload() {
@@ -140,6 +145,133 @@ class Intro extends Phaser.State {
 
     this.game.add.existing(this.start_button);
     this.game.add.existing(this.how_button);
+
+    const boards = new five.Boards([`A`, `B`]).on(`ready`, () => {
+      console.log(boards);
+      boards.each(board => {
+
+        if (board.id === `A`) {
+
+          this.game.global.led = new five.Led.RGB({
+            pins: {
+              red: 9,
+              green: 10,
+              blue: 11,
+            },
+            board
+          });
+          this.game.global.led.color(`#FF0000`);
+          this.game.global.led.on();
+          // led.color(`#FF0000`);
+
+          // led.blink(1500);
+
+          this.buttonStart = new five.Button({
+            pin: 13,
+            board
+          });
+
+
+          this.buttonStart.on(`down`, () => {
+            console.log(`gameStart intro`);
+          //this.game.state.start(`Play`);
+          });
+
+          this.buttonStart.on(`up`, () => {
+            console.log(`gameStart intro`);
+            console.log(this.game.state.current);
+            if (this.game.state.current === `Intro`) {
+              this.game.state.start(`Play`);
+            }
+          });
+
+          this.buttonTomato = new five.Button({
+            pin: 2,
+            board
+          });
+
+          this.buttonTomato.on(`down`, () => {
+            this.game.global.buttonTomatoUp = true;
+            console.log(`buttonTomato`);
+          });
+
+          this.buttonTomato.on(`up`, () => {
+            this.game.global.buttonTomatoUp = false;
+          });
+
+          this.buttonMeat = new five.Button({
+            pin: 3,
+            board
+          });
+
+          this.buttonMeat.on(`down`, () => {
+            this.game.global.buttonMeatUp = true;
+            console.log(`buttonMeat`);
+          });
+
+          this.buttonMeat.on(`up`, () => {
+            this.game.global.buttonMeatUp = false;
+          });
+
+          this.buttonEgg = new five.Button({
+            pin: 4,
+            board
+          });
+
+          this.buttonEgg.on(`down`, () => {
+            this.game.global.buttonEggUp = true;
+            console.log(`buttonEgg`);
+          });
+
+          this.buttonEgg.on(`up`, () => {
+            this.game.global.buttonEggUp = false;
+          });
+
+          this.buttonFish = new five.Button({
+            pin: 5,
+            board
+          });
+
+          this.buttonFish.on(`down`, () => {
+            this.game.global.buttonFishUp = true;
+            console.log(`buttonFish`);
+          });
+
+          this.buttonFish.on(`up`, () => {
+            this.game.global.buttonFishUp = false;
+          });
+
+          this.buttonCarrot = new five.Button({
+            pin: 6,
+            board
+          });
+
+          this.buttonCarrot.on(`down`, () => {
+            this.game.global.buttonCarrotUp = true;
+            console.log(`buttonCarrot`);
+          });
+
+          this.buttonCarrot.on(`up`, () => {
+            this.game.global.buttonCarrotUp = false;
+          });
+
+          // this.buttonPotato = new five.Button(7);
+          this.buttonPotato = new five.Button({
+            pin: 7,
+            board
+          });
+
+          this.buttonPotato.on(`down`, () => {
+            this.game.global.buttonPotatoUp = true;
+            console.log(`buttonPotato`);
+          });
+
+          this.buttonPotato.on(`up`, () => {
+            this.game.global.buttonPotatoUp = false;
+          });
+        }
+      });
+    });
   }
 
   howClick() {
