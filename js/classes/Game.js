@@ -3,7 +3,7 @@ const intro = require(`./states/Intro`);
 let game;
 
 const init = () => {
-  game = new  Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO);
+  game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.AUTO);
   game.global = {
     buttonTomatoUp: false,
     buttonMeatUp: false,
@@ -11,8 +11,16 @@ const init = () => {
     buttonPotatoUp: false,
     buttonEggUp: false,
     buttonCarrotUp: false,
+    buttonTomatoUp2: false,
+    buttonMeatUp2: false,
+    buttonFishUp2: false,
+    buttonPotatoUp2: false,
+    buttonEggUp2: false,
+    buttonCarrotUp2: false,
     addscore: false,
-    led: 0
+    addscore2: false,
+    led: 0,
+    led2: 0
   };
 
 
