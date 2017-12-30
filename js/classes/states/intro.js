@@ -174,13 +174,18 @@ class Intro extends Phaser.State {
 
           this.buttonStart.on(`down`, () => {
             console.log(`gameStart intro`);
-          //this.game.state.start(`Play`);
+            //this.game.state.start(`Play`);
+            // if (this.game.state.current === `Intro`) {
+            //   console.log(`start state`);
+            //   this.game.state.start(`Play`);
+            // }
           });
 
           this.buttonStart.on(`up`, () => {
             console.log(`gameStart intro`);
             console.log(this.game.state.current);
             if (this.game.state.current === `Intro`) {
+              console.log(`start state`);
               this.game.state.start(`Play`);
             }
           });
@@ -268,6 +273,93 @@ class Intro extends Phaser.State {
 
           this.buttonPotato.on(`up`, () => {
             this.game.global.buttonPotatoUp = false;
+          });
+        }
+
+        if (board.id === `B`) {
+          this.buttonTomato2 = new five.Button({
+            pin: 2,
+            board
+          });
+
+          this.buttonTomato2.on(`down`, () => {
+            //this.game.global.buttonTomatoUp = true;
+            console.log(`buttonTomato2`);
+          });
+
+          this.buttonTomato2.on(`up`, () => {
+            //this.game.global.buttonTomatoUp = false;
+          });
+
+          this.buttonMeat2 = new five.Button({
+            pin: 3,
+            board
+          });
+
+          this.buttonMeat2.on(`down`, () => {
+            //this.game.global.buttonMeatUp = true;
+            console.log(`buttonMeat2`);
+          });
+
+          this.buttonMeat2.on(`up`, () => {
+            //this.game.global.buttonMeatUp = false;
+          });
+
+          this.buttonEgg2 = new five.Button({
+            pin: 4,
+            board
+          });
+
+          this.buttonEgg2.on(`down`, () => {
+            //this.game.global.buttonEggUp = true;
+            console.log(`buttonEgg2`);
+          });
+
+          this.buttonEgg2.on(`up`, () => {
+            //this.game.global.buttonEggUp = false;
+          });
+
+          this.buttonFish2 = new five.Button({
+            pin: 5,
+            board
+          });
+
+          this.buttonFish2.on(`down`, () => {
+            //this.game.global.buttonFishUp = true;
+            console.log(`buttonFish2`);
+          });
+
+          this.buttonFish2.on(`up`, () => {
+            //this.game.global.buttonFishUp = false;
+          });
+
+          this.buttonCarrot2 = new five.Button({
+            pin: 6,
+            board
+          });
+
+          this.buttonCarrot2.on(`down`, () => {
+            //this.game.global.buttonCarrotUp = true;
+            console.log(`buttonCarrot2`);
+          });
+
+          this.buttonCarrot2.on(`up`, () => {
+            //this.game.global.buttonCarrotUp = false;
+          });
+
+          // this.buttonPotato = new five.Button(7);
+          this.buttonPotato2 = new five.Button({
+            pin: 7,
+            board
+          });
+
+          this.buttonPotato2.on(`down`, () => {
+            //this.game.global.buttonPotatoUp = true;
+            console.log(`buttonPotato2`);
+          });
+
+          this.buttonPotato2.on(`up`, () => {
+            //this.game.global.buttonPotatoUp = false;
           });
         }
       });
