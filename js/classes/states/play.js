@@ -2,8 +2,6 @@ const Pot = require(`../objects/Pots.js`);
 
 require(`../../johnny_five`);
 //const five = require(`johnny-five`);
-
-let led;
 //let buttonTomatoUp = false;
 // let buttonMeatUp = false;
 // let buttonFishUp = false;
@@ -40,7 +38,6 @@ class Play extends Phaser.State {
     this.createLivesPlayer2();
     this.startGeneratingIngredients();
     //this.startGeneratingSmoke();
-    this.createLivesPlayer1();
     this.createButtons();
     this.pickIngredient();
     this.pickIngredient2();
@@ -77,7 +74,7 @@ class Play extends Phaser.State {
   }
 
   overcooking() {
-    console.log(`overcooking`);
+    //console.log(`overcooking`);
     potOvercooking = true;
     // console.log(this.game.global.led);
     this.game.global.led.blink(500);
@@ -510,8 +507,9 @@ class Play extends Phaser.State {
 
   pickIngredient() {
     //isalive functie lost dit op
+    this.game.global.addscore = true;
     if (this.ingredient) {
-      if (this.ingredient.alive === true) {
+      if (this.ingredient.position.y === this.game.world.centerY) {
         this.ingredient.kill();
         const life = this.lives.getFirstAlive();
       //  console.log(this.lives.getFirstAlive());
@@ -540,6 +538,7 @@ class Play extends Phaser.State {
     item = this.items[Math.floor(Math.random() * this.items.length)];
     this.ingredient = this.add.sprite(this.game.world.centerX - 200, this.game.world.centerY, item[0]);
     this.ingredient.anchor.set(0.5);
+    this.game.physics.arcade.enable(this.ingredient);
     // console.log(item[1]);
     //this.add.sprite(300, 300, item);
   }
@@ -567,7 +566,7 @@ class Play extends Phaser.State {
 
         if (life2 !== null) {
           life2.kill();
-          console.log(`life lost`);
+          //console.log(`life lost`);
         } else {
           //this.game.state.start(`winner2`);
           // console.log(`game Over`);
@@ -592,14 +591,35 @@ class Play extends Phaser.State {
     //this.add.sprite(300, 300, item);
   }
   update() {
+    // console.log(this.ingredient.position.y);
+
+    if (this.ingredient.position.y >= 633) {
+      this.ingredient.destroy();
+    }
+
+    // if (this.ingredient.position.y === 633) {
+    //   this.ingredient.destroy();
+    // }
+    // console.log(this.game.global.buttonTomatoUp);
     //this.emitter.customSort(this.scaleSort, this);
 
     if (this.game.global.buttonTomatoUp && item[0] === `tomato`) {
-      console.log(this.game.global.buttonTomatoUp);
-      this.ingredient.destroy();
-      score += 100;
+
+      //console.log(this.game.global.buttonTomatoUp);
+      if (this.game.global.addscore) {
+        score += 100;
+        this.game.global.addscore = false;
+      }
+      if (this.ingredient) {
+        this.ingredient.body.velocity.y = 200;
+      }
+
       this.scoreField.text = `score${score}`;
-      this.game.global.buttonTomatoUp = false;
+      console.log(this.ingredient.position.y);
+      // if (this.ingredient.position.y === 433) {
+      //   this.ingredient.destroy();
+      //   this.game.global.buttonTomatoUp = false;
+      // }
     }
 
     if (this.game.global.buttonMeatUp && item[0] === `meat`) {
@@ -650,6 +670,9 @@ class Play extends Phaser.State {
       score2 += 100;
       this.scoreField2.text = `score${score2}`;
     }
+    // this.game.world.bringToTop(this.pot1);
+    // this.potsTeam1.bringToTop();
+    // this.pot2.bringToTop();
   }
 
 }

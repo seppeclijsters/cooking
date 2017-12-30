@@ -11,6 +11,7 @@ const init = () => {
     buttonPotatoUp: false,
     buttonEggUp: false,
     buttonCarrotUp: false,
+    addscore: false,
     led: 0
   };
 
