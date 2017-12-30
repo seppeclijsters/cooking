@@ -9,9 +9,10 @@ require(`../../johnny_five`);
 // let buttonEggUp = false;
 // let buttonCarrotUp = false;
 let potOvercooking = false;
-let randomTime = 15000;
-let randomTime2 = 15000;
-
+let potOvercooking2 = false;
+// let randomTime = 15000;
+// let randomTime2 = 15000;
+// let smoke = true;
 //let buttonTomatoUp2 = false;
 console.log(potOvercooking);
 
@@ -27,10 +28,10 @@ let item2;
 let score = 0;
 let score2 = 0;
 
-this.emitter;
-
 class Play extends Phaser.State {
   preload() {
+    // this.emitter = this.game.add.emitter(this.game.world.centerX - 200, 500, 400);
+    // this.emitter.on = false;
   }
   create() {
     this.background();
@@ -44,6 +45,11 @@ class Play extends Phaser.State {
     this.pickIngredient2();
     this.createScore();
     this.startOvercookTimer();
+  }
+
+  startOvercookTimer() {
+    this.overcookingGenerator = this.time.events.loop(2000, this.overcooking, this);
+    this.overcookingGenerator2 = this.time.events.loop(2000, this.overcooking2, this);
   }
 
   createLivesPlayer1() {
@@ -85,24 +91,25 @@ class Play extends Phaser.State {
     }
   }
 
-  overcooking2() {
-    //console.log(`overcooking`);
-    potOvercooking = true;
-    // console.log(this.game.global.led);
-    this.game.global.led.blink(500);
-
-    if (potOvercooking === true) {
-      this.startGeneratingSmoke();
-    }
-    // this.smokeEmitter2();
-  }
-
   startGeneratingSmoke() {
     this.smokeEmitter();
   }
 
   startGeneratingSmoke2() {
     this.smokeEmitter2();
+  }
+
+  overcooking2() {
+    //console.log(`overcooking`);
+    potOvercooking2 = true;
+    // console.log(this.game.global.led);
+    this.game.global.led2.blink(500);
+
+    if (potOvercooking2 === true) {
+      this.startGeneratingSmoke2();
+    }
+    // this.smokeEmitter2();
+    // console.log(`overcooking2`);
   }
 
   checkingsmoke() {
@@ -121,7 +128,6 @@ class Play extends Phaser.State {
 
   checkingsmoke2() {
     // console.log(`cheking smoke2`);
-
     if (this.emitter2.on === true) {
       this.emitter2.on = false;
       const life2 = this.lives2.getFirstAlive();
@@ -137,24 +143,23 @@ class Play extends Phaser.State {
     //   console.log(`emitter wordt uitgezet`);
     //   this.emitter2.on = false;
     //
-    //   const life2 = this.lives2.getFirstAlive();
-    //   if (life2 !== null) {
-    //     life2.kill();
+    //   const life = this.lives.getFirstAlive();
+    //   if (life !== null) {
+    //     life.kill();
     //     // console.log(`life lost`);
     //   } else {
     //     // console.log(`game Over`);
     //   }
     // } else {
-    //   console.log(`emitter 2 al uit`);
-    //   //score += 100;
+    //   console.log(`emitter al uit`);
+    //   score += 100;
     // }
   }
 
-  startOvercookTimer() {
-    this.overcookingGenerator = this.time.events.loop(randomTime, this.overcooking, this);
-    this.overcookingGenerator2 = this.time.events.loop(randomTime2, this.overcooking2, this);
-
-  }
+  // startOvercookTimer() {
+  //
+  //
+  // }
 
   smokeEmitter() {
 
@@ -162,7 +167,7 @@ class Play extends Phaser.State {
       this.checkSmoke = this.time.events.loop(6000, this.checkingsmoke, this);
     } else {
       //this.checkSmoke.destroy();
-      console.log(`check`);
+      // console.log(`check`);
     }
 
     if (!this.emitter) {
@@ -191,7 +196,7 @@ class Play extends Phaser.State {
     //     console.log(`game Over`);
     //   }
     // }
-    console.log(this.emitter);
+
   }
 
   smokeEmitter2() {
@@ -238,6 +243,14 @@ class Play extends Phaser.State {
     //   this.emitter2.gravity = - 500;
     //   this.emitter2.start(false, 2000, 10);
     // }
+
+    // if (this.emitter.on === false) {
+    //   console.log(`emitter aan`);
+    //   this.emitter.on = true;
+    // } else {
+    //   this.emitter.on = false;
+    // }
+    // console.log(this.emitter);
   }
 
   scaleSort(a, b) {
@@ -290,10 +303,6 @@ class Play extends Phaser.State {
     this.ingredientsGenerator.timer.start();
     this.ingredientsGenerator2.timer.start();
   }
-
-  // startOvercookTimer() {
-  //   this.overcookingGenerator = this.time.events.loop(Math.floor(Math.random() * 12000) + 6000, this.overcooking, this);
-  // }
 
   pickIngredient() {
     //isalive functie lost dit op
@@ -381,9 +390,23 @@ class Play extends Phaser.State {
     this.game.physics.arcade.enable(this.ingredient2);
   }
   update() {
+    // if (this.emitter.on === false && !this.overcookingGenerator) {
+    //   smoke = true;
+    // }
+    // randomTime = this.game.rnd.integerInRange(5000, 6000);
+    // randomTime2 = this.game.rnd.integerInRange(8000, 9000);
+    // if (smoke) {
+    //   this.overcookingGenerator = this.time.events.add(randomTime, this.overcooking, this);
+    //   smoke = false;
+    //   console.log(this.overcookingGenerator);
+    // }
+    //
+    // if (!this.overcookingGenerator2) {
+    //   this.overcookingGenerator2 = this.time.events.add(randomTime2, this.overcooking2, this);
+    // }
 
-    randomTime = this.game.rnd.integerInRange(15000, 30000);
-    console.log(randomTime);
+
+    // console.log(randomTime);
 
     // ================== PLAYER 1 ======================
 

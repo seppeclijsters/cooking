@@ -150,6 +150,23 @@ class Intro extends Phaser.State {
 
         if (board.id === `A`) {
 
+          const proximity = new five.Proximity({
+            controller: `HCSR04`,
+            pin: 12,
+            board
+          });
+
+          proximity.on(`data`, function() {
+            // console.log(`Proximity: `);
+            // console.log(`  cm  : `, this.cm);
+            // console.log(`  in  : `, this.in);
+            // console.log(`-----------------`);
+          });
+
+          proximity.on(`change`, function() {
+            // console.log(`The obstruction has moved.`);
+          });
+
           this.game.global.led = new five.Led.RGB({
             pins: {
               red: 9,
@@ -275,6 +292,22 @@ class Intro extends Phaser.State {
         }
 
         if (board.id === `B`) {
+          const proximity2 = new five.Proximity({
+            controller: `HCSR04`,
+            pin: 13,
+            board
+          });
+
+          proximity2.on(`data`, function() {
+            // console.log(`Proximity: `);
+            // console.log(`  cm proximity2 : `, this.cm);
+            // console.log(`  in  : `, this.in);
+            // console.log(`-----------------`);
+          });
+
+          proximity2.on(`change`, function() {
+            // console.log(`The obstruction has moved.`);
+          });
 
           this.game.global.led2 = new five.Led.RGB({
             pins: {
