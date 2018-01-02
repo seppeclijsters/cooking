@@ -27,6 +27,7 @@ let item;
 let item2;
 let score = 0;
 let score2 = 0;
+let stirr = 0;
 
 class Play extends Phaser.State {
   preload() {
@@ -393,9 +394,19 @@ class Play extends Phaser.State {
     // console.log(`DISTANCE 1`, this.game.global.distance);
     //console.log(`DISTANCE 2`, this.game.global.distance2);
 
-    if (this.game.global.distance <= 7) {
-      // console.log(`geroerd`);
-      // this.stopGeneratingSmoke();
+    // if (this.game.global.distance <= 7) {
+    //   // console.log(`geroerd`);
+    //   // this.stopGeneratingSmoke();
+    // }
+
+    if (this.game.global.distance <= 7 && stirr === 0 || this.game.global.distance <= 7 && stirr === 1 || this.game.global.distance <= 7 && stirr === 2 || this.game.global.distance <= 7 && stirr === 3) {
+      stirr ++;
+      console.log(`geroerd`);
+      //this.stopGeneratingSmoke();
+    }
+
+    if (stirr === 3) {
+      this.stopGeneratingSmoke();
     }
 
     // if (this.emitter.on === false && !this.overcookingGenerator) {
