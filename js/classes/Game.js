@@ -20,7 +20,9 @@ const init = () => {
     addscore: false,
     addscore2: false,
     led: 0,
-    led2: 0
+    led2: 0,
+    distance: 0,
+    distance2: 0
   };
 
 

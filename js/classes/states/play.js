@@ -48,8 +48,8 @@ class Play extends Phaser.State {
   }
 
   startOvercookTimer() {
-    this.overcookingGenerator = this.time.events.loop(2000, this.overcooking, this);
-    this.overcookingGenerator2 = this.time.events.loop(2000, this.overcooking2, this);
+    this.overcookingGenerator = this.time.events.loop(15000, this.overcooking, this);
+    this.overcookingGenerator2 = this.time.events.loop(15000, this.overcooking2, this);
   }
 
   createLivesPlayer1() {
@@ -390,6 +390,14 @@ class Play extends Phaser.State {
     this.game.physics.arcade.enable(this.ingredient2);
   }
   update() {
+    // console.log(`DISTANCE 1`, this.game.global.distance);
+    //console.log(`DISTANCE 2`, this.game.global.distance2);
+
+    if (this.game.global.distance <= 7) {
+      // console.log(`geroerd`);
+      // this.stopGeneratingSmoke();
+    }
+
     // if (this.emitter.on === false && !this.overcookingGenerator) {
     //   smoke = true;
     // }

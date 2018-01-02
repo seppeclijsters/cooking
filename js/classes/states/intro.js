@@ -6,6 +6,7 @@ const winnerPlayer2 = require(`./winner2.js`);
 
 require(`../../johnny_five`);
 const five = require(`johnny-five`);
+let distance;
 
 let counter = 0;
 //let buttonTomatoUp;
@@ -156,14 +157,22 @@ class Intro extends Phaser.State {
             board
           });
 
+          const updateDistance = cm => {
+            this.game.global.distance = cm;
+            // console.log(`intro`, this.game.global.distance);
+          };
+
+
           proximity.on(`data`, function() {
-            // console.log(`Proximity: `);
-            // console.log(`  cm  : `, this.cm);
-            // console.log(`  in  : `, this.in);
+            updateDistance(this.cm);
+            // console.log(`Proximity: `)
+            // console.log(`  in 1 : `, this.cm);
             // console.log(`-----------------`);
           });
 
           proximity.on(`change`, function() {
+            // updateDistance(this.cm);
+            //console.log(distance);
             // console.log(`The obstruction has moved.`);
           });
 
@@ -179,7 +188,7 @@ class Intro extends Phaser.State {
           this.game.global.led.on();
           // led.color(`#FF0000`);
 
-          // led.blink(1500);
+          //this.game.global.led.blink(1500);
 
           this.buttonStart = new five.Button({
             pin: 13,
@@ -294,11 +303,17 @@ class Intro extends Phaser.State {
         if (board.id === `B`) {
           const proximity2 = new five.Proximity({
             controller: `HCSR04`,
-            pin: 13,
+            pin: 12,
             board
           });
 
+          const updateDistance2 = cm => {
+            this.game.global.distance2 = cm;
+            //console.log(`intro`, this.game.global.distance);
+          };
+
           proximity2.on(`data`, function() {
+            updateDistance2(this.cm);
             // console.log(`Proximity: `);
             // console.log(`  cm proximity2 : `, this.cm);
             // console.log(`  in  : `, this.in);
@@ -322,6 +337,29 @@ class Intro extends Phaser.State {
           // led2.color(`#FF0000`);
 
           // led2.blink(1500);
+
+          this.buttonInstructions = new five.Button({
+            pin: 13,
+            board
+          });
+
+
+          this.buttonInstructions.on(`down`, () => {
+            console.log(`buttonInstructions`);
+            //this.game.state.start(`Play`);
+            // if (this.game.state.current === `Intro`) {
+            //   console.log(`start state`);
+            //   this.game.state.start(`Play`);
+            // }
+          });
+
+          this.buttonInstructions.on(`up`, () => {
+            console.log(this.game.state.current);
+            if (this.game.state.current === `Intro`) {
+              console.log(`Instruct state`);
+              this.game.state.start(`Instruct`);
+            }
+          });
 
           this.buttonTomato2 = new five.Button({
             pin: 2,
@@ -420,6 +458,7 @@ class Intro extends Phaser.State {
   }
 
   update() {
+    this.game.global.distance = distance;
     counter ++;
     //console.log(`counter = ${counter}`);
     let posy2;
