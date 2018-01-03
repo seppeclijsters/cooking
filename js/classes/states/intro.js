@@ -18,10 +18,18 @@ class Intro extends Phaser.State {
     this.load.image(`start_button`, `./assets/start_button.png`);
     this.load.image(`life`, `./assets/life.png`);
     this.game.load.image(`smoke`, `assets/smoke.png`);
+    this.game.load.image(`kitchenCloset`, `assets/kitchencloset.png`);
     this.game.load.image(`tiles`, `assets/tiles.png`);
+    this.game.load.image(`tile1`, `assets/tile1.png`);
+    this.game.load.image(`tile2`, `assets/tile2.png`);
+    this.game.load.image(`tile3`, `assets/tile3.png`);
+    this.game.load.image(`tile4`, `assets/tile4.png`);
+    this.game.load.image(`tools`, `assets/tools.png`);
     this.game.load.image(`pot`, `assets/cooking_pot.png`);
     this.game.load.image(`backPot`, `assets/backPot.png`);
     this.game.load.image(`frontPot`, `assets/frontPot.png`);
+    this.game.load.image(`cheese`, `assets/cheese.png`);
+    this.game.load.image(`mushroom`, `assets/mushroom.png`);
     this.game.load.image(`carrot`, `assets/carrot.png`);
     this.game.load.image(`egg`, `assets/egg.png`);
     this.game.load.image(`fish`, `assets/fish.png`);
@@ -40,9 +48,16 @@ class Intro extends Phaser.State {
   create() {
     this.middleX = this.game.world.centerX;
     this.middleY = this.game.world.centerY;
-    this.game.stage.backgroundColor = `#ddb440`;
+    this.game.stage.backgroundColor = `#e2a489`;
     // this.game.stage.backgroundColor = `#ddb440`; #ab332f
-    this.game.add.tileSprite(0, 600, this.world.width, this.world.height, `tiles`);
+    this.game.add.tileSprite(140, this.middleY, this.game.width, this.game.height, `tile3`);
+    this.game.add.tileSprite(60, 0, 80, this.game.height, `tile1`);
+    this.game.add.tileSprite(60, this.middleY - 20, this.game.width, 50, `tile1`);
+    this.add.sprite(60, this.middleY + 20, `kitchenCloset`);
+    this.game.add.tileSprite(0, 0, 60, this.game.height, `tile3`);
+    this.game.add.tileSprite(0, this.middleY + 250, this.world.width, this.world.height, `tile2`);
+    this.tools = this.add.sprite(this.game.width - 200, 150, `tools`);
+    this.tools.anchor.set(.5);
     //this.background();
     this.logo();
     this.buttons();
@@ -120,7 +135,7 @@ class Intro extends Phaser.State {
     this.fish.anchor.set(0.5);
     this.game.add.tween(this.fish).to({angle: 360}, 2900, Phaser.Easing.Cubic.In, true, - 1, 0);
 
-    this.potato = this.game.add.sprite(this.middleX - 150, this.middleY + 180, `potato`);
+    this.potato = this.game.add.sprite(this.middleX - 150, this.middleY + 180, `cheese`);
     this.potato.anchor.set(0.5);
     this.game.add.tween(this.potato).to({angle: 360}, 2400, Phaser.Easing.Linear.In, true, 500, - 1, 0);
 
@@ -128,7 +143,7 @@ class Intro extends Phaser.State {
     this.egg.anchor.set(0.5);
     this.game.add.tween(this.egg).to({angle: 360}, 2400, Phaser.Easing.Linear.In, true, 500, - 1, 0);
 
-    this.meat = this.game.add.sprite(this.middleX - 150, this.middleY + 180, `meat`);
+    this.meat = this.game.add.sprite(this.middleX - 150, this.middleY + 180, `mushroom`);
     this.meat.anchor.set(0.5);
     this.game.add.tween(this.meat).to({angle: - 250}, 2400, Phaser.Easing.Linear.In, true, 2000, - 1, 0);
 
