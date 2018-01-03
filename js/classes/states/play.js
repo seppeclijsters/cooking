@@ -506,73 +506,73 @@ class Play extends Phaser.State {
     if (this.game.global.buttonTomatoUp && item[0] === `tomato`) {
       if (this.game.global.addscore) {
         this.game.global.led.color(`#00ff00`);
-        score += 100;
+        this.game.global.score += 100;
         this.game.global.addscore = false;
       }
       if (this.ingredient.body) {
         this.ingredient.body.velocity.y = 200;
       }
-      this.scoreField.text = `score${score}`;
+      this.scoreField.text = `score${this.game.global.score}`;
     }
 
     if (this.game.global.buttonMeatUp && item[0] === `meat`) {
       if (this.game.global.addscore) {
         this.game.global.led.color(`#00ff00`);
-        score += 100;
+        this.game.global.score += 100;
         this.game.global.addscore = false;
       }
       if (this.ingredient.body) {
         this.ingredient.body.velocity.y = 200;
       }
-      this.scoreField.text = `score${score}`;
+      this.scoreField.text = `score${this.game.global.score}`;
     }
 
     if (this.game.global.buttonEggUp && item[0] === `egg`) {
       if (this.game.global.addscore) {
         this.game.global.led.color(`#00ff00`);
-        score += 100;
+        this.game.global.score += 100;
         this.game.global.addscore = false;
       }
       if (this.ingredient.body) {
         this.ingredient.body.velocity.y = 200;
       }
-      this.scoreField.text = `score${score}`;
+      this.scoreField.text = `score${this.game.global.score}`;
     }
 
     if (this.game.global.buttonFishUp && item[0] === `fish`) {
       if (this.game.global.addscore) {
         this.game.global.led.color(`#00ff00`);
-        score += 100;
+        this.game.global.score += 100;
         this.game.global.addscore = false;
       }
       if (this.ingredient.body) {
         this.ingredient.body.velocity.y = 200;
       }
-      this.scoreField.text = `score${score}`;
+      this.scoreField.text = `score${this.game.global.score}`;
     }
 
     if (this.game.global.buttonCarrotUp && item[0] === `carrot`) {
       if (this.game.global.addscore) {
         this.game.global.led.color(`#00ff00`);
-        score += 100;
+        this.game.global.score += 100;
         this.game.global.addscore = false;
       }
       if (this.ingredient.body) {
         this.ingredient.body.velocity.y = 200;
       }
-      this.scoreField.text = `score${score}`;
+      this.scoreField.text = `score${this.game.global.score}`;
     }
 
     if (this.game.global.buttonPotatoUp && item[0] === `potato`) {
       if (this.game.global.addscore) {
         this.game.global.led.color(`#00ff00`);
-        score += 100;
+        this.game.global.score += 100;
         this.game.global.addscore = false;
       }
       if (this.ingredient.body) {
         this.ingredient.body.velocity.y = 200;
       }
-      this.scoreField.text = `score${score}`;
+      this.scoreField.text = `score${this.game.global.score}`;
     }
 
     // ================== PLAYER 2 ======================
@@ -585,7 +585,7 @@ class Play extends Phaser.State {
       console.log(`het werkt`);
       if (this.game.global.addscore2) {
         this.game.global.led2.color(`#00ff00`);
-        score2 += 100;
+        this.game.global.score2 += 100;
         this.game.global.addscore2 = false;
         this.game.global.led2.color(`#00ff00`);
         // this.game.global.led2.strobe(500);
@@ -595,67 +595,67 @@ class Play extends Phaser.State {
       if (this.ingredient2.body) {
         this.ingredient2.body.velocity.y = 200;
       }
-      this.scoreField2.text = `score${score2}`;
+      this.scoreField2.text = `score${this.game.global.score2}`;
     }
 
     if (this.game.global.buttonMeatUp2 && item2[0] === `meat`) {
       if (this.game.global.addscore2) {
         this.game.global.led2.color(`#00ff00`);
-        score2 += 100;
+        this.game.global.score2 += 100;
         this.game.global.addscore2 = false;
       }
       if (this.ingredient2.body) {
         this.ingredient2.body.velocity.y = 200;
       }
-      this.scoreField2.text = `score${score2}`;
+      this.scoreField2.text = `score${this.game.global.score2}`;
     }
 
     if (this.game.global.buttonEggUp2 && item2[0] === `egg`) {
       if (this.game.global.addscore2) {
         this.game.global.led2.color(`#00ff00`);
-        score2 += 100;
+        this.game.global.score2 += 100;
         this.game.global.addscore2 = false;
       }
       if (this.ingredient2.body) {
         this.ingredient2.body.velocity.y = 200;
       }
-      this.scoreField2.text = `score${score2}`;
+      this.scoreField2.text = `score${this.game.global.score2}`;
     }
 
     if (this.game.global.buttonFishUp2 && item2[0] === `fish`) {
       if (this.game.global.addscore2) {
         this.game.global.led2.color(`#00ff00`);
-        score2 += 100;
+        this.game.global.score2 += 100;
         this.game.global.addscore2 = false;
       }
       if (this.ingredient2.body) {
         this.ingredient2.body.velocity.y = 200;
       }
-      this.scoreField2.text = `score${score2}`;
+      this.scoreField2.text = `score${this.game.global.score2}`;
     }
 
     if (this.game.global.buttonCarrotUp2 && item2[0] === `carrot`) {
       if (this.game.global.addscore2) {
         this.game.global.led2.color(`#00ff00`);
-        score2 += 100;
+        this.game.global.score2 += 100;
         this.game.global.addscore2 = false;
       }
       if (this.ingredient2.body) {
         this.ingredient2.body.velocity.y = 200;
       }
-      this.scoreField2.text = `score${score2}`;
+      this.scoreField2.text = `score${this.game.global.score2}`;
     }
 
     if (this.game.global.buttonPotatoUp2 && item2[0] === `potato`) {
       if (this.game.global.addscore2) {
         this.game.global.led2.color(`#00ff00`);
-        score2 += 100;
+        this.game.global.score2 += 100;
         this.game.global.addscore2 = false;
       }
       if (this.ingredient2.body) {
         this.ingredient2.body.velocity.y = 200;
       }
-      this.scoreField2.text = `score${score2}`;
+      this.scoreField2.text = `score${this.game.global.score2}`;
     }
 
     // this.game.world.bringToTop(this.pot1);
