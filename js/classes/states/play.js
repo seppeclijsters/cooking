@@ -39,6 +39,7 @@ class Play extends Phaser.State {
     this.cookingPots();
     this.createLivesPlayer1();
     this.createLivesPlayer2();
+    this.createSound();
     this.startGeneratingIngredients();
     //this.startGeneratingSmoke();
     this.createButtons();
@@ -46,6 +47,10 @@ class Play extends Phaser.State {
     this.pickIngredient2();
     this.createScore();
     this.startOvercookTimer();
+  }
+
+  createSound() {
+    this.done = this.game.add.audio(`done`);
   }
 
   startOvercookTimer() {
@@ -85,7 +90,7 @@ class Play extends Phaser.State {
     //console.log(`overcooking`);
     potOvercooking = true;
     // console.log(this.game.global.led);
-    this.game.global.led.blink(500);
+    this.game.global.led.blink(250);
 
     if (potOvercooking === true) {
       this.startGeneratingSmoke();
@@ -104,7 +109,7 @@ class Play extends Phaser.State {
     //console.log(`overcooking`);
     potOvercooking2 = true;
     // console.log(this.game.global.led);
-    this.game.global.led2.blink(500);
+    this.game.global.led2.blink(250);
 
     if (potOvercooking2 === true) {
       this.startGeneratingSmoke2();
@@ -117,6 +122,8 @@ class Play extends Phaser.State {
     // console.log(`checked smoke`);
     if (this.emitter.on === true) {
       this.emitter.on = false;
+      this.game.global.led.stop().off();
+      this.game.global.led.color(`#FF0000`);
       const life = this.lives.getFirstAlive();
       if (life !== null) {
         life.kill();
@@ -131,6 +138,8 @@ class Play extends Phaser.State {
     // console.log(`cheking smoke2`);
     if (this.emitter2.on === true) {
       this.emitter2.on = false;
+      this.game.global.led2.stop().off();
+      this.game.global.led2.color(`#FF0000`);
       const life2 = this.lives2.getFirstAlive();
       if (life2 !== null) {
         life2.kill();
@@ -263,6 +272,11 @@ class Play extends Phaser.State {
     this.emitter.on = false;
   }
 
+  stopGeneratingSmoke2() {
+    console.log(this.emitter);
+    this.emitter2.on = false;
+  }
+
   stopOvercooking() {
     console.log(`stop overcooking`);
     potOvercooking = false;
@@ -307,6 +321,8 @@ class Play extends Phaser.State {
 
   pickIngredient() {
     //isalive functie lost dit op
+    // this.game.global.led.color(`#ff5400`);
+    this.game.global.led.color(`#ff0000`);
     this.game.global.addscore = true;
     if (this.ingredient) {
       if (this.ingredient.position.y === this.game.world.centerY) {
@@ -359,6 +375,8 @@ class Play extends Phaser.State {
 
   pickIngredient2() {
     this.game.global.addscore2 = true;
+    this.game.global.led2.color(`#ff0000`);
+    // this.game.global.led.color(`#ff5400`);
     //isalive functie lost dit op
     if (this.ingredient2) {
       if (this.ingredient2.alive === true) {
@@ -392,22 +410,42 @@ class Play extends Phaser.State {
   }
   update() {
     // console.log(`DISTANCE 1`, this.game.global.distance);
-    //console.log(`DISTANCE 2`, this.game.global.distance2);
+    // console.log(`DISTANCE 2`, this.game.global.distance2);
 
     // if (this.game.global.distance <= 7) {
     //   // console.log(`geroerd`);
     //   // this.stopGeneratingSmoke();
     // }
 
-    if (this.game.global.distance <= 7 && stirr === 0 || this.game.global.distance <= 7 && stirr === 1 || this.game.global.distance <= 7 && stirr === 2 || this.game.global.distance <= 7 && stirr === 3) {
-      stirr ++;
-      console.log(`geroerd`);
-      //this.stopGeneratingSmoke();
+    if (this.game.global.distance <= 10 && this.emitter) {
+      if (!this.done.isPlaying) {
+        this.done.play();
+        //console.log(this.done.isPlaying);
+      }
+      this.stopGeneratingSmoke();
+      this.game.global.led.stop().off();
+      this.game.global.led.color(`#FF0000`);
     }
 
-    if (stirr === 3) {
-      this.stopGeneratingSmoke();
+    if (this.game.global.distance2 <= 10 && this.emitter) {
+      if (!this.done.isPlaying) {
+        this.done.play();
+        //console.log(this.done.isPlaying);
+      }
+      this.stopGeneratingSmoke2();
+      this.game.global.led2.stop().off();
+      this.game.global.led2.color(`#FF0000`);
     }
+
+
+    //   stirr ++;
+    //   console.log(`geroerd`);
+    //   //this.stopGeneratingSmoke();
+    // }
+
+    // if (stirr >= 3 && this.emitter) {
+    //   this.stopGeneratingSmoke();
+    // }
 
     // if (this.emitter.on === false && !this.overcookingGenerator) {
     //   smoke = true;
@@ -435,6 +473,7 @@ class Play extends Phaser.State {
 
     if (this.game.global.buttonTomatoUp && item[0] === `tomato`) {
       if (this.game.global.addscore) {
+        this.game.global.led.color(`#00ff00`);
         score += 100;
         this.game.global.addscore = false;
       }
@@ -446,6 +485,7 @@ class Play extends Phaser.State {
 
     if (this.game.global.buttonMeatUp && item[0] === `meat`) {
       if (this.game.global.addscore) {
+        this.game.global.led.color(`#00ff00`);
         score += 100;
         this.game.global.addscore = false;
       }
@@ -457,6 +497,7 @@ class Play extends Phaser.State {
 
     if (this.game.global.buttonEggUp && item[0] === `egg`) {
       if (this.game.global.addscore) {
+        this.game.global.led.color(`#00ff00`);
         score += 100;
         this.game.global.addscore = false;
       }
@@ -468,6 +509,7 @@ class Play extends Phaser.State {
 
     if (this.game.global.buttonFishUp && item[0] === `fish`) {
       if (this.game.global.addscore) {
+        this.game.global.led.color(`#00ff00`);
         score += 100;
         this.game.global.addscore = false;
       }
@@ -479,6 +521,7 @@ class Play extends Phaser.State {
 
     if (this.game.global.buttonCarrotUp && item[0] === `carrot`) {
       if (this.game.global.addscore) {
+        this.game.global.led.color(`#00ff00`);
         score += 100;
         this.game.global.addscore = false;
       }
@@ -490,6 +533,7 @@ class Play extends Phaser.State {
 
     if (this.game.global.buttonPotatoUp && item[0] === `potato`) {
       if (this.game.global.addscore) {
+        this.game.global.led.color(`#00ff00`);
         score += 100;
         this.game.global.addscore = false;
       }
@@ -508,8 +552,15 @@ class Play extends Phaser.State {
     if (this.game.global.buttonTomatoUp2 && item2[0] === `tomato`) {
       console.log(`het werkt`);
       if (this.game.global.addscore2) {
+        this.game.global.led2.color(`#00ff00`);
         score += 100;
         this.game.global.addscore2 = false;
+        this.game.global.led2.color(`#00ff00`);
+        // this.game.global.led2.strobe(500);
+        // this.game.global.led2.stop.off();
+
+
+        //this.game.global.led2.color(`#ff0000`);
       }
       if (this.ingredient2.body) {
         this.ingredient2.body.velocity.y = 200;
@@ -519,6 +570,7 @@ class Play extends Phaser.State {
 
     if (this.game.global.buttonMeatUp2 && item2[0] === `meat`) {
       if (this.game.global.addscore2) {
+        this.game.global.led2.color(`#00ff00`);
         score += 100;
         this.game.global.addscore2 = false;
       }
@@ -530,6 +582,7 @@ class Play extends Phaser.State {
 
     if (this.game.global.buttonEggUp2 && item2[0] === `egg`) {
       if (this.game.global.addscore2) {
+        this.game.global.led2.color(`#00ff00`);
         score += 100;
         this.game.global.addscore2 = false;
       }
@@ -541,6 +594,7 @@ class Play extends Phaser.State {
 
     if (this.game.global.buttonFishUp2 && item2[0] === `fish`) {
       if (this.game.global.addscore2) {
+        this.game.global.led2.color(`#00ff00`);
         score += 100;
         this.game.global.addscore2 = false;
       }
@@ -552,6 +606,7 @@ class Play extends Phaser.State {
 
     if (this.game.global.buttonCarrotUp2 && item2[0] === `carrot`) {
       if (this.game.global.addscore2) {
+        this.game.global.led2.color(`#00ff00`);
         score += 100;
         this.game.global.addscore2 = false;
       }
@@ -563,6 +618,7 @@ class Play extends Phaser.State {
 
     if (this.game.global.buttonPotatoUp2 && item2[0] === `potato`) {
       if (this.game.global.addscore2) {
+        this.game.global.led2.color(`#00ff00`);
         score += 100;
         this.game.global.addscore2 = false;
       }
