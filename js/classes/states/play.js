@@ -362,10 +362,10 @@ class Play extends Phaser.State {
 
     this.items = [
       [`egg`, this.game.global.buttonEggUp],
-      [`meat`, this.game.global.buttonMeatUp],
+      [`mushroom`, this.game.global.buttonMeatUp],
       [`fish`, this.game.global.buttonFishUp],
       [`tomato`, this.game.global.buttonTomatoUp],
-      [`potato`, this.game.global.buttonPotatoUp],
+      [`cheese`, this.game.global.buttonPotatoUp],
       [`carrot`, this.game.global.buttonCarrotUp]
     ];
     item = this.items[Math.floor(Math.random() * this.items.length)];
@@ -417,10 +417,10 @@ class Play extends Phaser.State {
 
     this.items2 = [
       [`egg`, this.game.global.buttonEggUp2],
-      [`meat`, this.game.global.buttonMeatUp2],
+      [`mushroom`, this.game.global.buttonMeatUp2],
       [`fish`, this.game.global.buttonFishUp2],
       [`tomato`, this.game.global.buttonTomatoUp2],
-      [`potato`, this.game.global.buttonPotatoUp2],
+      [`cheese`, this.game.global.buttonPotatoUp2],
       [`carrot`, this.game.global.buttonCarrotUp2]
     ];
     item2 = this.items2[Math.floor(Math.random() * this.items2.length)];
@@ -515,7 +515,7 @@ class Play extends Phaser.State {
       this.scoreField.text = `score${this.game.global.score}`;
     }
 
-    if (this.game.global.buttonMeatUp && item[0] === `meat`) {
+    if (this.game.global.buttonMeatUp && item[0] === `mushroom`) {
       if (this.game.global.addscore) {
         this.game.global.led.color(`#00ff00`);
         this.game.global.score += 100;
@@ -563,7 +563,7 @@ class Play extends Phaser.State {
       this.scoreField.text = `score${this.game.global.score}`;
     }
 
-    if (this.game.global.buttonPotatoUp && item[0] === `potato`) {
+    if (this.game.global.buttonPotatoUp && item[0] === `cheese`) {
       if (this.game.global.addscore) {
         this.game.global.led.color(`#00ff00`);
         this.game.global.score += 100;
@@ -598,7 +598,7 @@ class Play extends Phaser.State {
       this.scoreField2.text = `score${this.game.global.score2}`;
     }
 
-    if (this.game.global.buttonMeatUp2 && item2[0] === `meat`) {
+    if (this.game.global.buttonMeatUp2 && item2[0] === `mushroom`) {
       if (this.game.global.addscore2) {
         this.game.global.led2.color(`#00ff00`);
         this.game.global.score2 += 100;
@@ -646,7 +646,7 @@ class Play extends Phaser.State {
       this.scoreField2.text = `score${this.game.global.score2}`;
     }
 
-    if (this.game.global.buttonPotatoUp2 && item2[0] === `potato`) {
+    if (this.game.global.buttonPotatoUp2 && item2[0] === `cheese`) {
       if (this.game.global.addscore2) {
         this.game.global.led2.color(`#00ff00`);
         this.game.global.score2 += 100;
