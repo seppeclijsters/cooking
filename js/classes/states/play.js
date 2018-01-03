@@ -135,6 +135,7 @@ class Play extends Phaser.State {
         //console.log(`life lost 1`);
       } else {
         console.log(`life lost 1`);
+        //this.game.state.start(`winner2`);
         // console.log(`game Over`);
       }
     }
@@ -152,6 +153,7 @@ class Play extends Phaser.State {
         life2.kill();
       } else {
         //console.log(`life lost 2`);
+        //this.game.state.start(`winner`);
         console.log(`game Over`);
       }
     }
@@ -296,7 +298,7 @@ class Play extends Phaser.State {
   }
   background() {
     this.game.stage.backgroundColor = `#FFFFFF`;
-    this.game.add.tileSprite(0, 0, 1500, 600, `tiles`);
+    this.game.add.tileSprite(0, 0, this.game.width, this.game.height, `tiles`);
   }
   cookingPots() {
     this.potsTeam1 = this.game.add.group();
@@ -429,8 +431,12 @@ class Play extends Phaser.State {
   update() {
 
 
-    if (this.lives2.children[2].alive === false || this.lives.children[2].alive === false) {
-      console.log(`game Over`);
+    if (this.lives.children[2].alive === false) {
+      this.game.state.start(`winner2`);
+    }
+
+    if (this.lives2.children[2].alive === false) {
+      this.game.state.start(`winner`);
     }
 
     counter ++;
@@ -500,73 +506,73 @@ class Play extends Phaser.State {
     if (this.game.global.buttonTomatoUp && item[0] === `tomato`) {
       if (this.game.global.addscore) {
         this.game.global.led.color(`#00ff00`);
-        score += 100;
+        this.game.global.score += 100;
         this.game.global.addscore = false;
       }
       if (this.ingredient.body) {
         this.ingredient.body.velocity.y = 200;
       }
-      this.scoreField.text = `score${score}`;
+      this.scoreField.text = `score${this.game.global.score}`;
     }
 
     if (this.game.global.buttonMeatUp && item[0] === `meat`) {
       if (this.game.global.addscore) {
         this.game.global.led.color(`#00ff00`);
-        score += 100;
+        this.game.global.score += 100;
         this.game.global.addscore = false;
       }
       if (this.ingredient.body) {
         this.ingredient.body.velocity.y = 200;
       }
-      this.scoreField.text = `score${score}`;
+      this.scoreField.text = `score${this.game.global.score}`;
     }
 
     if (this.game.global.buttonEggUp && item[0] === `egg`) {
       if (this.game.global.addscore) {
         this.game.global.led.color(`#00ff00`);
-        score += 100;
+        this.game.global.score += 100;
         this.game.global.addscore = false;
       }
       if (this.ingredient.body) {
         this.ingredient.body.velocity.y = 200;
       }
-      this.scoreField.text = `score${score}`;
+      this.scoreField.text = `score${this.game.global.score}`;
     }
 
     if (this.game.global.buttonFishUp && item[0] === `fish`) {
       if (this.game.global.addscore) {
         this.game.global.led.color(`#00ff00`);
-        score += 100;
+        this.game.global.score += 100;
         this.game.global.addscore = false;
       }
       if (this.ingredient.body) {
         this.ingredient.body.velocity.y = 200;
       }
-      this.scoreField.text = `score${score}`;
+      this.scoreField.text = `score${this.game.global.score}`;
     }
 
     if (this.game.global.buttonCarrotUp && item[0] === `carrot`) {
       if (this.game.global.addscore) {
         this.game.global.led.color(`#00ff00`);
-        score += 100;
+        this.game.global.score += 100;
         this.game.global.addscore = false;
       }
       if (this.ingredient.body) {
         this.ingredient.body.velocity.y = 200;
       }
-      this.scoreField.text = `score${score}`;
+      this.scoreField.text = `score${this.game.global.score}`;
     }
 
     if (this.game.global.buttonPotatoUp && item[0] === `potato`) {
       if (this.game.global.addscore) {
         this.game.global.led.color(`#00ff00`);
-        score += 100;
+        this.game.global.score += 100;
         this.game.global.addscore = false;
       }
       if (this.ingredient.body) {
         this.ingredient.body.velocity.y = 200;
       }
-      this.scoreField.text = `score${score}`;
+      this.scoreField.text = `score${this.game.global.score}`;
     }
 
     // ================== PLAYER 2 ======================
@@ -579,79 +585,77 @@ class Play extends Phaser.State {
       console.log(`het werkt`);
       if (this.game.global.addscore2) {
         this.game.global.led2.color(`#00ff00`);
-        score2 += 100;
+        this.game.global.score2 += 100;
         this.game.global.addscore2 = false;
         this.game.global.led2.color(`#00ff00`);
         // this.game.global.led2.strobe(500);
         // this.game.global.led2.stop.off();
-
-
         //this.game.global.led2.color(`#ff0000`);
       }
       if (this.ingredient2.body) {
         this.ingredient2.body.velocity.y = 200;
       }
-      this.scoreField2.text = `score${score2}`;
+      this.scoreField2.text = `score${this.game.global.score2}`;
     }
 
     if (this.game.global.buttonMeatUp2 && item2[0] === `meat`) {
       if (this.game.global.addscore2) {
         this.game.global.led2.color(`#00ff00`);
-        score2 += 100;
+        this.game.global.score2 += 100;
         this.game.global.addscore2 = false;
       }
       if (this.ingredient2.body) {
         this.ingredient2.body.velocity.y = 200;
       }
-      this.scoreField2.text = `score${score2}`;
+      this.scoreField2.text = `score${this.game.global.score2}`;
     }
 
     if (this.game.global.buttonEggUp2 && item2[0] === `egg`) {
       if (this.game.global.addscore2) {
         this.game.global.led2.color(`#00ff00`);
-        score2 += 100;
+        this.game.global.score2 += 100;
         this.game.global.addscore2 = false;
       }
       if (this.ingredient2.body) {
         this.ingredient2.body.velocity.y = 200;
       }
-      this.scoreField2.text = `score${score2}`;
+      this.scoreField2.text = `score${this.game.global.score2}`;
     }
 
     if (this.game.global.buttonFishUp2 && item2[0] === `fish`) {
       if (this.game.global.addscore2) {
         this.game.global.led2.color(`#00ff00`);
-        score2 += 100;
+        this.game.global.score2 += 100;
         this.game.global.addscore2 = false;
       }
       if (this.ingredient2.body) {
         this.ingredient2.body.velocity.y = 200;
       }
-      this.scoreField2.text = `score${score2}`;
+      this.scoreField2.text = `score${this.game.global.score2}`;
     }
 
     if (this.game.global.buttonCarrotUp2 && item2[0] === `carrot`) {
       if (this.game.global.addscore2) {
         this.game.global.led2.color(`#00ff00`);
-        score2 += 100;
+        this.game.global.score2 += 100;
         this.game.global.addscore2 = false;
       }
       if (this.ingredient2.body) {
         this.ingredient2.body.velocity.y = 200;
       }
-      this.scoreField2.text = `score${score2}`;
+      this.scoreField2.text = `score${this.game.global.score2}`;
     }
 
     if (this.game.global.buttonPotatoUp2 && item2[0] === `potato`) {
       if (this.game.global.addscore2) {
         this.game.global.led2.color(`#00ff00`);
-        score2 += 100;
+        this.game.global.score2 += 100;
         this.game.global.addscore2 = false;
       }
       if (this.ingredient2.body) {
         this.ingredient2.body.velocity.y = 200;
       }
-      this.scoreField2.text = `score${score2}`;
+      this.scoreField2.text = `score${this.game.global.score2}`;
     }
 
     // this.game.world.bringToTop(this.pot1);

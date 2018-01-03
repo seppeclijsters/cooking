@@ -22,7 +22,9 @@ const init = () => {
     led: 0,
     led2: 0,
     distance: 0,
-    distance2: 0
+    distance2: 0,
+    score: 0,
+    score2: 0,
   };
 
 
