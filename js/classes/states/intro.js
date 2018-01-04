@@ -34,7 +34,7 @@ class Intro extends Phaser.State {
     this.game.load.image(`egg`, `assets/egg.png`);
     this.game.load.image(`fish`, `assets/fish.png`);
     this.game.load.image(`meat`, `assets/meat.png`);
-    this.game.load.image(`potato`, `assets/patato.png`);
+    this.game.load.image(`potato`, `assets/potato.png`);
     this.game.load.image(`tomato`, `assets/tomato.png`);
     this.game.load.image(`cookingPot`, `assets/cookingPot.png`);
     this.game.load.image(`cookingPotFront`, `assets/cookingPotFront.png`);
@@ -224,6 +224,14 @@ class Intro extends Phaser.State {
           this.buttonStart.on(`up`, () => {
             console.log(`gameStart intro`);
             console.log(this.game.state.current);
+            if (this.game.state.current === `winner`) {
+              this.game.state.start(`Intro`);
+            }
+
+            if (this.game.state.current === `winner2`) {
+              this.game.state.start(`Intro`);
+            }
+
             if (this.game.state.current === `Intro`) {
               console.log(`start state`);
               this.game.state.start(`Play`);

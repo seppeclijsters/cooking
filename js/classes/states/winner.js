@@ -39,7 +39,7 @@ class winner extends Phaser.State {
     this.game.global.led2.stop();
   }
   addScore() {
-    this.scoreText = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 100, `Met een score van : ${this.game.global.score}`, {font: `30px BigJohn`, fill: `black`});
+    this.scoreText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, `Met een score van : ${this.game.global.score}`, {font: `30px BigJohn`, fill: `black`});
     this.scoreText.anchor.set(0.5);
     this.game.add.existing(this.scoreText);
   }

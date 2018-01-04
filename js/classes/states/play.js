@@ -54,6 +54,10 @@ class Play extends Phaser.State {
     this.startOvercookTimer();
   }
 
+  killingcheese() {
+    this.cheese.kill();
+  }
+
   createSound() {
     this.done = this.game.add.audio(`done`);
   }
@@ -350,7 +354,7 @@ class Play extends Phaser.State {
 
         if (life !== null) {
           life.kill();
-          console.log(this.lives.children[2].alive);
+          //console.log(this.lives.children[2].alive);
           //console.log(`life lost`);
         }
         // console.log(`-1 leven`);
@@ -362,13 +366,13 @@ class Play extends Phaser.State {
 
     this.items = [
       [`egg`, this.game.global.buttonEggUp],
-      [`mushroom`, this.game.global.buttonMeatUp],
+      [`cheese`, this.game.global.buttonMeatUp],
       [`fish`, this.game.global.buttonFishUp],
       [`tomato`, this.game.global.buttonTomatoUp],
-      [`cheese`, this.game.global.buttonPotatoUp],
+      [`mushroom`, this.game.global.buttonPotatoUp],
       [`carrot`, this.game.global.buttonCarrotUp]
     ];
-    item = this.items[Math.floor(Math.random() * this.items.length)];
+    item = this.items[Math.floor(Math.random() * this.items.length)]; //Math.floor(Math.random() * this.items.length)
     this.ingredient = this.add.sprite(this.game.world.centerX - 200, this.game.world.centerY, item[0]);
     this.ingredient.anchor.set(0.5);
     this.game.physics.arcade.enable(this.ingredient);
@@ -417,10 +421,10 @@ class Play extends Phaser.State {
 
     this.items2 = [
       [`egg`, this.game.global.buttonEggUp2],
-      [`mushroom`, this.game.global.buttonMeatUp2],
+      [`cheese`, this.game.global.buttonMeatUp2],
       [`fish`, this.game.global.buttonFishUp2],
       [`tomato`, this.game.global.buttonTomatoUp2],
-      [`cheese`, this.game.global.buttonPotatoUp2],
+      [`mushroom`, this.game.global.buttonPotatoUp2],
       [`carrot`, this.game.global.buttonCarrotUp2]
     ];
     item2 = this.items2[Math.floor(Math.random() * this.items2.length)];
@@ -515,7 +519,7 @@ class Play extends Phaser.State {
       this.scoreField.text = `score${this.game.global.score}`;
     }
 
-    if (this.game.global.buttonMeatUp && item[0] === `mushroom`) {
+    if (this.game.global.buttonMeatUp && item[0] === `cheese`) {
       if (this.game.global.addscore) {
         this.game.global.led.color(`#00ff00`);
         this.game.global.score += 100;
@@ -563,7 +567,7 @@ class Play extends Phaser.State {
       this.scoreField.text = `score${this.game.global.score}`;
     }
 
-    if (this.game.global.buttonPotatoUp && item[0] === `cheese`) {
+    if (this.game.global.buttonPotatoUp && item[0] === `mushroom`) {
       if (this.game.global.addscore) {
         this.game.global.led.color(`#00ff00`);
         this.game.global.score += 100;
@@ -598,7 +602,7 @@ class Play extends Phaser.State {
       this.scoreField2.text = `score${this.game.global.score2}`;
     }
 
-    if (this.game.global.buttonMeatUp2 && item2[0] === `mushroom`) {
+    if (this.game.global.buttonMeatUp2 && item2[0] === `cheese`) {
       if (this.game.global.addscore2) {
         this.game.global.led2.color(`#00ff00`);
         this.game.global.score2 += 100;
@@ -646,7 +650,7 @@ class Play extends Phaser.State {
       this.scoreField2.text = `score${this.game.global.score2}`;
     }
 
-    if (this.game.global.buttonPotatoUp2 && item2[0] === `cheese`) {
+    if (this.game.global.buttonPotatoUp2 && item2[0] === `mushroom`) {
       if (this.game.global.addscore2) {
         this.game.global.led2.color(`#00ff00`);
         this.game.global.score2 += 100;

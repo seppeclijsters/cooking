@@ -29,7 +29,7 @@ class winner2 extends Phaser.State {
   }
   addText() {
     this.style = {font: `bold 200px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle`};
-    this.text = this.game.add.text(this.game.world.centerX, this.game.world.centerY, `Player two wins !!`, this.style);
+    this.text = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 200, `Player two wins !!`, this.style);
     this.text.anchor.set(0.5);
     this.text.setTextBounds(0, 100, 800, 100);
     this.game.add.existing(this.text);
@@ -41,8 +41,8 @@ class winner2 extends Phaser.State {
     // this.game.global.led.color(`#FF0000`);
     // this.game.global.led2.stop().off();
   }
-  addScore() {
-    this.scoreText = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 200, `Met een score van :${this.game.global.score}`, {font: `30px BigJohn`, fill: `black`});
+  addscore() {
+    this.scoreText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, `Met een score van :${this.game.global.score2}`, {font: `30px BigJohn`, fill: `black`});
     this.game.add.existing(this.scoreText);
   }
 }
