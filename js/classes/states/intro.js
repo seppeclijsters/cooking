@@ -200,6 +200,7 @@ class Intro extends Phaser.State {
             },
             board
           });
+          //this.game.global.led.stop().off();
           this.game.global.led.color(`#FF0000`);
           this.game.global.led.on();
           // led.color(`#FF0000`);
@@ -226,10 +227,15 @@ class Intro extends Phaser.State {
             console.log(this.game.state.current);
             if (this.game.state.current === `winner`) {
               this.game.state.start(`Intro`);
+              this.game.global.led.stop().off();
+              this.game.global.led2.stop().off();
+
             }
 
             if (this.game.state.current === `winner2`) {
               this.game.state.start(`Intro`);
+              this.game.global.led.stop().off();
+              this.game.global.led2.stop().off();
             }
 
             if (this.game.state.current === `Intro`) {
@@ -356,6 +362,7 @@ class Intro extends Phaser.State {
             },
             board
           });
+          // this.game.global.led2.stop().off();
           this.game.global.led2.color(`#FF0000`);
           this.game.global.led2.on();
           // led2.color(`#FF0000`);
