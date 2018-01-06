@@ -18,6 +18,7 @@ let potOvercooking2 = false;
 
 const PlayerLives = 3;
 
+let gameOvervariable = false;
 let upKey;
 let downKey;
 let leftKey;
@@ -25,13 +26,13 @@ let rightKey;
 // let items;
 let item;
 let item2;
-let score = 0;
-let score2 = 0;
+// let score = 0;
+// let score2 = 0;
 let stirr = 0;
-let counter = 0;
+// let counter = 0;
 let ingredientTimer = 5000;
 let difficulty1 = false;
-let count = - 1;
+// let count = - 1;
 let repeatCounter = 3;
 
 class Play extends Phaser.State {
@@ -87,14 +88,6 @@ class Play extends Phaser.State {
     }
   }
 
-  gecalibreerd() {
-    console.log(`gecalibreerd`);
-  }
-
-  beweging() {
-    console.log(`beweging`);
-  }
-
   overcooking() {
     //console.log(`overcooking`);
     potOvercooking = true;
@@ -138,7 +131,7 @@ class Play extends Phaser.State {
         life.kill();
         //console.log(`life lost 1`);
       } else {
-        console.log(`life lost 1`);
+        // console.log(`life lost 1`);
         //this.game.state.start(`winner2`);
         // console.log(`game Over`);
       }
@@ -153,12 +146,12 @@ class Play extends Phaser.State {
       this.game.global.led2.color(`#FF0000`);
       const life2 = this.lives2.getFirstAlive();
       if (life2 !== null) {
-        console.log(this.lives2.children[2].alive);
+        // console.log(this.lives2.children[2].alive);
         life2.kill();
       } else {
         //console.log(`life lost 2`);
         //this.game.state.start(`winner`);
-        console.log(`game Over`);
+        // console.log(`game Over`);
       }
     }
 
@@ -313,6 +306,7 @@ class Play extends Phaser.State {
   }
 
   startGeneratingIngredients() {
+    console.log(`startGeneratingIngredients`);
     this.ingredientsGenerator = this.time.events.repeat(ingredientTimer, repeatCounter, this.pickIngredient, this);
   //  his.time.events.repeat(1000, 10, this.createShieldTime, this);
     this.ingredientsGenerator2 = this.time.events.repeat(ingredientTimer, repeatCounter, this.pickIngredient2, this);
@@ -321,6 +315,7 @@ class Play extends Phaser.State {
   }
 
   startloop() {
+    console.log(`heyeheyeheyeheeyeheyheyeheyeheyeheeyeheyheyeheyeheyeheeyeheyheyeheyeheyeheeyeheyheyeheyeheyeheeyeheyheyeheyeheyeheeyeheyheyeheyeheyeheeyeheyheyeheyeheyeheeyeheyheyeheyeheyeheeyeheyheyeheyeheyeheeyeheyheyeheyeheyeheeyeheyheyeheyeheyeheeyeheyheyeheyeheyeheeyehey`);
     this.ingredientsGeneratorLoop = this.time.events.loop(ingredientTimer, this.pickIngredient, this);
     this.ingredientsGenerator2Loop = this.time.events.loop(ingredientTimer, this.pickIngredient2, this);
     this.ingredientsGeneratorLoop.timer.start();
@@ -329,7 +324,7 @@ class Play extends Phaser.State {
 
   pickIngredient() {
     //console.log(`pickIngredient 1`);
-    count ++;
+    this.game.global.count ++;
     this.game.global.led.color(`#ff0000`);
     this.game.global.addscore = true;
     // if (this.ingredient) {
@@ -348,7 +343,7 @@ class Play extends Phaser.State {
     //     // console.log(this.ingredient.alive);
     //   }
     if (this.ingredient) {
-      if (this.ingredient.alive === true) {
+      if (this.ingredient.alive === true && this.ingredient.position.y === this.game.world.centerY) {
         this.ingredient.kill();
         const life = this.lives.getFirstAlive();
 
@@ -356,6 +351,8 @@ class Play extends Phaser.State {
           life.kill();
           //console.log(this.lives.children[2].alive);
           //console.log(`life lost`);
+        } else {
+          // this.gameOver();
         }
         // console.log(`-1 leven`);
         // console.log(this.ingredient2.alive);
@@ -402,17 +399,18 @@ class Play extends Phaser.State {
     // this.game.global.led.color(`#ff5400`);
     //isalive functie lost dit op
     if (this.ingredient2) {
-      if (this.ingredient2.alive === true) {
+      if (this.ingredient2.alive === true && this.ingredient2.position.y === this.game.world.centerY) {
         this.ingredient2.kill();
         const life2 = this.lives2.getFirstAlive();
 
         if (life2 !== null) {
           life2.kill();
-          console.log(this.lives2.children[2].alive);
+          // console.log(this.lives2.children[2].alive);
           //console.log(`life lost`);
         } else {
+          // this.gameOver();
           //this.game.state.start(`winner2`);
-          console.log(`game Over`);
+          // console.log(`game Over`);
         }
         // console.log(`-1 leven`);
         // console.log(this.ingredient2.alive);
@@ -434,37 +432,56 @@ class Play extends Phaser.State {
   }
   update() {
 
+    // if (this.ingredientsGeneratorLoop) {
+    //   this.ingredientsGeneratorLoop.timer.destroy();
+    //   console.log(this.ingredientsGeneratorLoop.timer);
+    //   this.gameOver();
+    //   // this.game.state.start(`winner2`);
+    // }
+    //
+    // if (this.ingredientsGeneratorLoop2) {
+    //   this.ingredientsGeneratorLoop2.timer.destroy();
+    //   this.gameOver();
+    //   // this.game.state.start(`winner2`);
+    //   console.log(this.ingredientsGeneratorLoop2.timer);
+    // }
+    // if (gameOvervariable) {
+    //   console.log(`tis gedaan met spelen`);
+    // }
 
-    if (this.lives.children[2].alive === false) {
+    if (!this.lives.children[2].alive) {
+      this.gameOver();
       this.game.state.start(`winner2`);
     }
 
-    if (this.lives2.children[2].alive === false) {
+    if (!this.lives2.children[2].alive) {
+      this.gameOver();
       this.game.state.start(`winner`);
     }
 
-    counter ++;
-    if (count === 3) {
-      if (counter === 900 + 60) {
+    this.game.global.counter ++;
+    console.log(this.game.global.counter, this.game.global.count);
+    if (this.game.global.count === 3) {
+      if (this.game.global.counter === 900 + 60) {
         console.log(`uitgevoerd 1`);
         ingredientTimer = 4000;
         repeatCounter = 5;
         this.startGeneratingIngredients();
       }
-    } else if (count === 8) {
-      if (counter === 2160 + 60) {
+    } else if (this.game.global.count === 8) {
+      if (this.game.global.counter === 2160 + 60) {
         console.log(`uitgevoerd 2`);
         ingredientTimer = 3000;
         this.startGeneratingIngredients();
       }
-    } else if (count === 13) {
-      if (counter === 3120 + 60) {
+    } else if (this.game.global.count === 13) {
+      if (this.game.global.counter === 3120 + 60) {
         console.log(`uitgevoerd 3`);
         ingredientTimer = 2000;
         this.startGeneratingIngredients();
       }
-    } else if (count === 18) {
-      if (counter === 3780 + 60) {
+    } else if (this.game.global.count === 18) {
+      if (this.game.global.counter === 3780 + 60) {
         console.log(`uitgevoerd 4`);
         ingredientTimer = 1500;
         this.startloop();
@@ -514,7 +531,7 @@ class Play extends Phaser.State {
         this.game.global.addscore = false;
       }
       if (this.ingredient.body) {
-        this.ingredient.body.velocity.y = 200;
+        this.ingredient.body.velocity.y = 300;
       }
       this.scoreField.text = `score${this.game.global.score}`;
     }
@@ -526,7 +543,7 @@ class Play extends Phaser.State {
         this.game.global.addscore = false;
       }
       if (this.ingredient.body) {
-        this.ingredient.body.velocity.y = 200;
+        this.ingredient.body.velocity.y = 300;
       }
       this.scoreField.text = `score${this.game.global.score}`;
     }
@@ -538,7 +555,7 @@ class Play extends Phaser.State {
         this.game.global.addscore = false;
       }
       if (this.ingredient.body) {
-        this.ingredient.body.velocity.y = 200;
+        this.ingredient.body.velocity.y = 300;
       }
       this.scoreField.text = `score${this.game.global.score}`;
     }
@@ -550,7 +567,7 @@ class Play extends Phaser.State {
         this.game.global.addscore = false;
       }
       if (this.ingredient.body) {
-        this.ingredient.body.velocity.y = 200;
+        this.ingredient.body.velocity.y = 300;
       }
       this.scoreField.text = `score${this.game.global.score}`;
     }
@@ -562,7 +579,7 @@ class Play extends Phaser.State {
         this.game.global.addscore = false;
       }
       if (this.ingredient.body) {
-        this.ingredient.body.velocity.y = 200;
+        this.ingredient.body.velocity.y = 300;
       }
       this.scoreField.text = `score${this.game.global.score}`;
     }
@@ -574,7 +591,7 @@ class Play extends Phaser.State {
         this.game.global.addscore = false;
       }
       if (this.ingredient.body) {
-        this.ingredient.body.velocity.y = 200;
+        this.ingredient.body.velocity.y = 300;
       }
       this.scoreField.text = `score${this.game.global.score}`;
     }
@@ -597,7 +614,7 @@ class Play extends Phaser.State {
         //this.game.global.led2.color(`#ff0000`);
       }
       if (this.ingredient2.body) {
-        this.ingredient2.body.velocity.y = 200;
+        this.ingredient2.body.velocity.y = 300;
       }
       this.scoreField2.text = `score${this.game.global.score2}`;
     }
@@ -609,7 +626,7 @@ class Play extends Phaser.State {
         this.game.global.addscore2 = false;
       }
       if (this.ingredient2.body) {
-        this.ingredient2.body.velocity.y = 200;
+        this.ingredient2.body.velocity.y = 300;
       }
       this.scoreField2.text = `score${this.game.global.score2}`;
     }
@@ -621,7 +638,7 @@ class Play extends Phaser.State {
         this.game.global.addscore2 = false;
       }
       if (this.ingredient2.body) {
-        this.ingredient2.body.velocity.y = 200;
+        this.ingredient2.body.velocity.y = 300;
       }
       this.scoreField2.text = `score${this.game.global.score2}`;
     }
@@ -633,7 +650,7 @@ class Play extends Phaser.State {
         this.game.global.addscore2 = false;
       }
       if (this.ingredient2.body) {
-        this.ingredient2.body.velocity.y = 200;
+        this.ingredient2.body.velocity.y = 300;
       }
       this.scoreField2.text = `score${this.game.global.score2}`;
     }
@@ -645,7 +662,7 @@ class Play extends Phaser.State {
         this.game.global.addscore2 = false;
       }
       if (this.ingredient2.body) {
-        this.ingredient2.body.velocity.y = 200;
+        this.ingredient2.body.velocity.y = 300;
       }
       this.scoreField2.text = `score${this.game.global.score2}`;
     }
@@ -657,14 +674,37 @@ class Play extends Phaser.State {
         this.game.global.addscore2 = false;
       }
       if (this.ingredient2.body) {
-        this.ingredient2.body.velocity.y = 200;
+        this.ingredient2.body.velocity.y = 300;
       }
       this.scoreField2.text = `score${this.game.global.score2}`;
     }
 
     // this.game.world.bringToTop(this.pot1);
-    // this.potsTeam1.bringToTop();
+    // // this.potsTeam1.bringToTop();
     // this.pot2.bringToTop();
+  }
+
+  gameOver() {
+    console.log(`game over`);
+    this.ingredientsGenerator.timer.destroy();
+    this.ingredientsGenerator2.timer.destroy();
+
+    if (this.ingredientsGeneratorLoop) {
+      this.ingredientsGeneratorLoop.timer.destroy();
+      console.log(this.ingredientsGeneratorLoop.timer);
+    }
+
+    if (this.ingredientsGeneratorLoop2) {
+      this.ingredientsGeneratorLoop2.timer.destroy();
+      console.log(this.ingredientsGeneratorLoop2.timer);
+    }
+
+    // this.ingredientsGeneratorLoop.timer.destroy();
+    // this.ingredientsGenerator2Loop.timer.destroy();
+    ingredientTimer = 5000;
+    repeatCounter = 3;
+    gameOvervariable = true;
+    this.game.state.start(`winner2`);
   }
 
 }

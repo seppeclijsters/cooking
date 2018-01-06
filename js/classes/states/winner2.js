@@ -10,6 +10,7 @@ class winner2 extends Phaser.State {
     this.restartClick();
     this.leds();
     this.addscore();
+    this.deleteScore();
   }
   background() {
     this.game.stage.backgroundColor = `#FFFFFF`;
@@ -44,6 +45,13 @@ class winner2 extends Phaser.State {
   addscore() {
     this.scoreText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, `Met een score van :${this.game.global.score2}`, {font: `30px BigJohn`, fill: `black`});
     this.game.add.existing(this.scoreText);
+  }
+
+  deleteScore() {
+    this.game.global.score = 0;
+    this.game.global.score2 = 0;
+    this.game.global.counter = 0;
+    this.game.global.count = - 1;
   }
 }
 

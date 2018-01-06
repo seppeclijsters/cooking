@@ -485,6 +485,14 @@ class Intro extends Phaser.State {
   }
 
   startClick() {
+    counter = 0;
+    this.i = 0;
+    this.i2 = 0;
+    this.i3 = 0;
+    this.i4 = 0;
+    this.i5 = 0;
+    this.i6 = 0;
+    this.increment = .012;
     this.game.state.start(`Play`);
   }
 

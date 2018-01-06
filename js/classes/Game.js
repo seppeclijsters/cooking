@@ -25,6 +25,8 @@ const init = () => {
     distance2: 0,
     score: 0,
     score2: 0,
+    counter: 0,
+    count: - 1
   };
 
 
