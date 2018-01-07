@@ -1,0 +1,33 @@
+{
+  "name": "electron-quick-start",
+  "version": "1.0.0",
+  "description": "A minimal Electron application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "install": "electron-rebuild",
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=cooking.icns --out=release-builds \"Cooking Challenge\""
+  },
+  "repository": "https://github.com/electron/electron-quick-start",
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "~1.7.8",
+    "electron-rebuild": "^1.6.0"
+  },
+  "dependencies": {
+    "ease-component": "1.0.0",
+    "eslint": "^3.13.1",
+    "eslint-config-devine": "^1.6.1",
+    "eslint-loader": "^1.6.1",
+    "firmata": "0.17.0",
+    "johnny-five": "^0.11.7"
+  }
+}

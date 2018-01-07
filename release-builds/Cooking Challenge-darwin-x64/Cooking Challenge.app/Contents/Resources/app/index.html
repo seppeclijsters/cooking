@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <script>
+    WebFontConfig = {
+      custom: {
+        families: ['BigJohn:n4'],
+        urls: [
+          'assets/BigJohn/big_john.css'
+        ]
+      }
+    };
+    (function() {
+      var wf = document.createElement('script');
+      wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+        '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+      wf.type = 'text/javascript';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(wf, s);
+    })();
+
+    </script>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+  </head>
+  <body>
+    <!-- <h1>Hello World!</h1> -->
+    <!-- All of the Node.js APIs are available in this renderer process. -->
+    <!-- We are using Node.js <script>document.write(process.versions.node)</script>,
+    Chromium <script>document.write(process.versions.chrome)</script>,
+    and Electron <script>document.write(process.versions.electron)</script>. -->
+
+    <script src="js/vendors/phaser.min.js"></script>
+    <script>
+      // You can also require other files to run in this process
+      require('./js/johnny_five.js')
+      require('./js/script.js')
+    </script>
+  </body>
+</html>
