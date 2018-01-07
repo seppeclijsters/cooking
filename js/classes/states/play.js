@@ -1,47 +1,20 @@
 const Pot = require(`../objects/Pots.js`);
 
 require(`../../johnny_five`);
-//const five = require(`johnny-five`);
-//let buttonTomatoUp = false;
-// let buttonMeatUp = false;
-// let buttonFishUp = false;
-// let buttonPotatoUp = false;
-// let buttonEggUp = false;
-// let buttonCarrotUp = false;
+
 let potOvercooking = false;
 let potOvercooking2 = false;
-// let randomTime = 15000;
-// let randomTime2 = 15000;
-// let smoke = true;
-//let buttonTomatoUp2 = false;
-
-
 const PlayerLives = 3;
-
 let gameOvervariable = false;
-let upKey;
-let downKey;
-let leftKey;
-let rightKey;
-// let items;
 let item;
 let item2;
-// let score = 0;
-// let score2 = 0;
-let stirr = 0;
-// let counter = 0;
 let ingredientTimer = 5000;
-let difficulty1 = false;
-// let count = - 1;
 let repeatCounter = 3;
 
 class Play extends Phaser.State {
   preload() {
-    // this.emitter = this.game.add.emitter(this.game.world.centerX - 200, 500, 400);
-    // this.emitter.on = false;
   }
   create() {
-    this.game.state.start(`winner2`);
     this.game.global.counterIngredients = 0;
     this.background();
     this.cookingPots();
@@ -50,8 +23,6 @@ class Play extends Phaser.State {
     this.createSound();
     this.startGeneratingIngredients();
     this.startMusic();
-    //this.startGeneratingSmoke();
-    this.createButtons();
     this.pickIngredient();
     this.pickIngredient2();
     this.createScore();
@@ -60,14 +31,11 @@ class Play extends Phaser.State {
   createSound() {
     this.done = this.game.add.audio(`done`);
     this.bg = this.game.add.audio(`bg`);
-    // this.bgmusic = this.game.add.audio(`foo`);
-    // this.bgmusic.play();
   }
 
   startMusic() {
     this.bg.play();
   }
-
 
   startOvercookTimer() {
     this.overcookingGenerator = this.time.events.loop(15000, this.overcooking, this);
@@ -79,7 +47,6 @@ class Play extends Phaser.State {
     const firstLifeIconX = 150 + (PlayerLives * 30);
     for (let i = 0;i < PlayerLives;i ++) {
       const life = this.lives.create(firstLifeIconX - (90 * i), 90, `life`);
-      // life.scale.setTo(0.1, 0.1);
       life.anchor.setTo(0.5, 0.5);
     }
   }
@@ -89,15 +56,12 @@ class Play extends Phaser.State {
     const firstLifeIconX2 = this.game.width - 150 - (PlayerLives * 30);
     for (let i = 0;i < PlayerLives;i ++) {
       const life2 = this.lives2.create(firstLifeIconX2 + (90 * i), 90, `life`);
-      // life2.scale.setTo(0.1, 0.1);
       life2.anchor.setTo(0.5, 0.5);
     }
   }
 
   overcooking() {
-    //console.log(`overcooking`);
     potOvercooking = true;
-    // console.log(this.game.global.led);
     this.game.global.led.blink(250);
 
     if (potOvercooking === true) {
@@ -105,29 +69,16 @@ class Play extends Phaser.State {
     }
   }
 
-  // startGeneratingSmoke() {
-  //   this.smokeEmitter();
-  // }
-  //
-  // startGeneratingSmoke2() {
-  //   this.smokeEmitter2();
-  // }
-
   overcooking2() {
-    //console.log(`overcooking`);
     potOvercooking2 = true;
-    // console.log(this.game.global.led);
     this.game.global.led2.blink(250);
 
     if (potOvercooking2 === true) {
       this.smokeEmitter2();
     }
-    // this.smokeEmitter2();
-    // console.log(`overcooking2`);
   }
 
   checkingsmoke() {
-    // console.log(`checked smoke`);
     if (this.emitter.on === true) {
       this.emitter.on = false;
       this.game.global.led.stop().off();
@@ -135,62 +86,24 @@ class Play extends Phaser.State {
       const life = this.lives.getFirstAlive();
       if (life !== null) {
         life.kill();
-        //console.log(`life lost 1`);
-      } else {
-        // console.log(`life lost 1`);
-        //this.game.state.start(`winner2`);
-        // console.log(`game Over`);
       }
     }
   }
 
   checkingsmoke2() {
-    // console.log(`cheking smoke2`);
     if (this.emitter2.on === true) {
       this.emitter2.on = false;
       this.game.global.led2.stop().off();
       this.game.global.led2.color(`#FF0000`);
       const life2 = this.lives2.getFirstAlive();
       if (life2 !== null) {
-        // console.log(this.lives2.children[2].alive);
         life2.kill();
-      } else {
-        //console.log(`life lost 2`);
-        //this.game.state.start(`winner`);
-        // console.log(`game Over`);
       }
     }
-
-    // if (this.emitter2.on === true) {
-    //   console.log(`emitter wordt uitgezet`);
-    //   this.emitter2.on = false;
-    //
-    //   const life = this.lives.getFirstAlive();
-    //   if (life !== null) {
-    //     life.kill();
-    //     // console.log(`life lost`);
-    //   } else {
-    //     // console.log(`game Over`);
-    //   }
-    // } else {
-    //   console.log(`emitter al uit`);
-    //   score += 100;
-    // }
   }
 
-  // startOvercookTimer() {
-  //
-  //
-  // }
-
   smokeEmitter() {
-
-    //if (!this.checkSmoke) {
     this.checkSmoke = this.time.events.repeat(6000, 1, this.checkingsmoke, this);
-    //} else {
-      //this.checkSmoke.destroy();
-      // console.log(`check`);
-    //}
 
     if (!this.emitter) {
       this.emitter = this.game.add.emitter(this.game.world.centerX - 200, 500, 400);
@@ -209,13 +122,7 @@ class Play extends Phaser.State {
   }
 
   smokeEmitter2() {
-
-    //if (!this.checkSmoke2) {
     this.checkSmoke2 = this.time.events.repeat(6000, 1, this.checkingsmoke2, this);
-    //} else {
-      //this.checkSmoke.destroy();
-      // console.log(`check`);
-    //}
 
     if (!this.emitter2) {
       this.emitter2 = this.game.add.emitter(this.game.world.centerX + 200, 500, 400);
@@ -241,33 +148,21 @@ class Play extends Phaser.State {
     if (this.emitter) {
       this.emitter.on = false;
     }
-    // // console.log(this.emitter);
-    // this.emitter.on = false;
   }
 
   stopGeneratingSmoke2() {
-    // console.log(this.emitter);
     if (this.emitter2) {
       this.emitter2.on = false;
     }
   }
 
   stopOvercooking() {
-    // console.log(`stop overcooking`);
     potOvercooking = false;
     if (potOvercooking === false) {
       this.stopGeneratingSmoke();
     }
-    // console.log(potOvercooking);
   }
 
-  createButtons() {
-    this.cursors = this.input.keyboard.createCursorKeys();
-    upKey = this.game.input.keyboard.addKey(Phaser.Keyboard.UP);
-    downKey = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
-    leftKey = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-    rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
-  }
   createScore() {
     this.scoreField = this.add.text(80, 40, `score: 0`, {font: `20px BigJohn`, fill: `black`});
     this.scoreField2 = this.add.text(this.game.width - 80, 40, `score: 0`, {font: `20px BigJohn`, fill: `black`});
@@ -276,17 +171,14 @@ class Play extends Phaser.State {
 
   }
   background() {
-    // this.game.stage.backgroundColor = `#FFFFFF`;
     this.background = this.game.stage.backgroundColor = `f5cf30`;
     this.game.add.tileSprite(140, this.game.world.height - 160, this.game.width, 200, `kitchenTile4`);
     this.kitchenCloset = this.add.sprite(50, this.game.world.height - 160, `kitchenCloset2`);
     this.game.add.tileSprite(0, 0, 50, this.game.height, `kitchenTile3`);
     this.game.add.tileSprite(50, 0, 70, this.game.world.centerY + 240, `kitchenTile2`);
     this.game.add.tileSprite(50, this.game.world.centerY + 240, this.game.width, 60, `kitchenTile2`);
-    // this.kitchenCloset.anchor.set(.5);
-    // this.game.add.tileSprite(0, 0, 60, this.game.height, `tile3`);
-    // this.game.add.tileSprite(0, this.middleY + 250, this.world.width, this.world.height, `tile2`);
   }
+
   cookingPots() {
     this.potsTeam1 = this.game.add.group();
     this.pot1 = new Pot(this.game, this.game.world.centerX + 200, this.game.world.centerY + 200);
@@ -298,16 +190,13 @@ class Play extends Phaser.State {
   }
 
   startGeneratingIngredients() {
-    console.log(`startGeneratingIngredients`);
     this.ingredientsGenerator = this.time.events.repeat(ingredientTimer, repeatCounter, this.pickIngredient, this);
-  //  his.time.events.repeat(1000, 10, this.createShieldTime, this);
     this.ingredientsGenerator2 = this.time.events.repeat(ingredientTimer, repeatCounter, this.pickIngredient2, this);
     this.ingredientsGenerator.timer.start();
     this.ingredientsGenerator2.timer.start();
   }
 
   startloop() {
-    console.log(`heyeheyeheyeheeyeheyheyeheyeheyeheeyeheyheyeheyeheyeheeyeheyheyeheyeheyeheeyeheyheyeheyeheyeheeyeheyheyeheyeheyeheeyeheyheyeheyeheyeheeyeheyheyeheyeheyeheeyeheyheyeheyeheyeheeyeheyheyeheyeheyeheeyeheyheyeheyeheyeheeyeheyheyeheyeheyeheeyeheyheyeheyeheyeheeyehey`);
     this.ingredientsGeneratorLoop = this.time.events.loop(ingredientTimer, this.pickIngredient, this);
     this.ingredientsGenerator2Loop = this.time.events.loop(ingredientTimer, this.pickIngredient2, this);
     this.ingredientsGeneratorLoop.timer.start();
@@ -315,25 +204,9 @@ class Play extends Phaser.State {
   }
 
   pickIngredient() {
-    //console.log(`pickIngredient 1`);
     this.game.global.count ++;
     this.game.global.led.color(`#ff0000`);
     this.game.global.addscore = true;
-    // if (this.ingredient) {
-    //   if (this.ingredient.position.y === this.game.world.centerY) {
-    //     this.ingredient.kill();
-    //     const life = this.lives.getFirstAlive();
-    //   //  console.log(this.lives.getFirstAlive());
-    //     if (life !== null) {
-    //       life.kill();
-    //       // console.log(`life lost`);
-    //     } else {
-    //       //this.game.state.start(`winner`);
-    //       // console.log(`game Over`);
-    //     }
-    //     // console.log(`-1 leven`);
-    //     // console.log(this.ingredient.alive);
-    //   }
     if (this.ingredient) {
       if (this.ingredient.alive === true && this.ingredient.position.y === this.game.world.centerY) {
         this.ingredient.kill();
@@ -341,17 +214,9 @@ class Play extends Phaser.State {
 
         if (life !== null) {
           life.kill();
-          //console.log(this.lives.children[2].alive);
-          //console.log(`life lost`);
-        } else {
-          // this.gameOver();
         }
-        // console.log(`-1 leven`);
-        // console.log(this.ingredient2.alive);
       }
     }
-
-  //  console.log(this.ingredient);
 
     this.items = [
       [`egg`, this.game.global.buttonEggUp],
@@ -365,31 +230,11 @@ class Play extends Phaser.State {
     this.ingredient = this.add.sprite(this.game.world.centerX - 200, this.game.world.centerY, item[0]);
     this.ingredient.anchor.set(0.5);
     this.game.physics.arcade.enable(this.ingredient);
-
-    // console.log(item[1]);
-    //this.add.sprite(300, 300, item);
   }
 
-  // overcookingPot2() {
-  //   if(this.smoke){
-  //     this.smoke.kill();
-  //     const life2 = this.lives2.getFirstAlive();
-  //
-  //     if (life2 !== null) {
-  //       life2.kill();
-  //       // console.log(`life lost`);
-  //     } else {
-  //       // console.log(`game Over`);
-  //     }
-  //   }
-  // }
-
   pickIngredient2() {
-    //console.log(`pickIngredient 2`);
     this.game.global.addscore2 = true;
     this.game.global.led2.color(`#ff0000`);
-    // this.game.global.led.color(`#ff5400`);
-    //isalive functie lost dit op
     if (this.ingredient2) {
       if (this.ingredient2.alive === true && this.ingredient2.position.y === this.game.world.centerY) {
         this.ingredient2.kill();
@@ -397,15 +242,7 @@ class Play extends Phaser.State {
 
         if (life2 !== null) {
           life2.kill();
-          // console.log(this.lives2.children[2].alive);
-          //console.log(`life lost`);
-        } else {
-          // this.gameOver();
-          //this.game.state.start(`winner2`);
-          // console.log(`game Over`);
         }
-        // console.log(`-1 leven`);
-        // console.log(this.ingredient2.alive);
       }
     }
 
@@ -423,23 +260,6 @@ class Play extends Phaser.State {
     this.game.physics.arcade.enable(this.ingredient2);
   }
   update() {
-
-    // if (this.ingredientsGeneratorLoop) {
-    //   this.ingredientsGeneratorLoop.timer.destroy();
-    //   console.log(this.ingredientsGeneratorLoop.timer);
-    //   this.gameOver();
-    //   // this.game.state.start(`winner2`);
-    // }
-    //
-    // if (this.ingredientsGeneratorLoop2) {
-    //   this.ingredientsGeneratorLoop2.timer.destroy();
-    //   this.gameOver();
-    //   // this.game.state.start(`winner2`);
-    //   console.log(this.ingredientsGeneratorLoop2.timer);
-    // }
-    // if (gameOvervariable) {
-    //   console.log(`tis gedaan met spelen`);
-    // }
 
     if (!this.lives.children[2].alive) {
       this.gameOver();
@@ -481,18 +301,9 @@ class Play extends Phaser.State {
     }
 
 
-    // console.log(`DISTANCE 1`, this.game.global.distance);
-    // console.log(`DISTANCE 2`, this.game.global.distance2);
-
-    // if (this.game.global.distance <= 7) {
-    //   // console.log(`geroerd`);
-    //   // this.stopGeneratingSmoke();
-    // }
-
     if (this.game.global.distance <= 10 && this.emitter) {
       if (!this.done.isPlaying) {
         this.done.play();
-        //console.log(this.done.isPlaying);
       }
       this.stopGeneratingSmoke();
       this.game.global.led.stop().off();
@@ -601,9 +412,6 @@ class Play extends Phaser.State {
         this.game.global.score2 += 100;
         this.game.global.addscore2 = false;
         this.game.global.led2.color(`#00ff00`);
-        // this.game.global.led2.strobe(500);
-        // this.game.global.led2.stop.off();
-        //this.game.global.led2.color(`#ff0000`);
       }
       if (this.ingredient2.body) {
         this.ingredient2.body.velocity.y = 300;
@@ -695,8 +503,6 @@ class Play extends Phaser.State {
       console.log(this.ingredientsGeneratorLoop2.timer);
     }
 
-    // this.ingredientsGeneratorLoop.timer.destroy();
-    // this.ingredientsGenerator2Loop.timer.destroy();
     ingredientTimer = 5000;
     repeatCounter = 3;
     gameOvervariable = true;

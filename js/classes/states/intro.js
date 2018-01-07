@@ -8,9 +8,6 @@ require(`../../johnny_five`);
 const five = require(`johnny-five`);
 let distance;
 
-// let counter = 0;
-//let buttonTomatoUp;
-
 class Intro extends Phaser.State {
   preload() {
     this.load.image(`logo`, `./assets/logo.png`);
@@ -43,13 +40,11 @@ class Intro extends Phaser.State {
     this.game.load.audio(`bg`, `assets/bg.mp3`);
     this.game.load.audio(`applause`, `assets/applause.wav`);
 
-
     this.game.load.image(`kitchenTile1`, `assets/tilePlay1.png`);
     this.game.load.image(`kitchenTile2`, `assets/tilePlay2.png`);
     this.game.load.image(`kitchenTile3`, `assets/tilePlay3.png`);
     this.game.load.image(`kitchenTile4`, `assets/tilePlay4.png`);
     this.game.load.image(`kitchenCloset2`, `assets/kitchencloset2.png`);
-    // this.game.load.image(`kitchenTile5`, `assets/tilePlay1.png`);
 
     this.game.load.image(`cook`, `assets/cook.png`);
     this.game.load.image(`head`, `assets/head.png`);
@@ -67,7 +62,6 @@ class Intro extends Phaser.State {
     this.middleX = this.game.world.centerX;
     this.middleY = this.game.world.centerY;
     this.game.stage.backgroundColor = `#e2a489`;
-    // this.game.stage.backgroundColor = `#ddb440`; #ab332f
     this.game.add.tileSprite(140, this.middleY, this.game.width, this.game.height, `tile3`);
     this.game.add.tileSprite(60, 0, 80, this.game.height, `tile1`);
     this.game.add.tileSprite(60, this.middleY - 20, this.game.width, 50, `tile1`);
@@ -76,7 +70,6 @@ class Intro extends Phaser.State {
     this.game.add.tileSprite(0, this.middleY + 250, this.world.width, this.world.height, `tile2`);
     this.tools = this.add.sprite(this.game.width - 200, 150, `tools`);
     this.tools.anchor.set(.5);
-    //this.background();
     this.logo();
     this.buttons();
     this.array();
@@ -84,7 +77,6 @@ class Intro extends Phaser.State {
 
   array() {
     this.bmd = null;
-    // points arrays - one for x and one for y
     this.points = {
       x: [this.middleX - 150, this.middleX, this.middleX + 150],
       y: [this.middleY + 50, this.middleY - 500, this.middleY]
@@ -114,7 +106,6 @@ class Intro extends Phaser.State {
       x: [this.middleX - 150, this.middleX, this.middleX + 65],
       y: [this.middleY + 180, this.middleY - 200, this.middleY]
     };
-    // this.stage.backgroundColor = `#eee`;
     this.increment = .012;
     this.i = 0;
     this.i2 = 0;
@@ -142,7 +133,6 @@ class Intro extends Phaser.State {
     // this.logo.anchor.set(0.5);
     this.tomato = this.game.add.sprite(this.middleX - 150, this.middleY + 150, `tomato`);
     this.tomato.anchor.set(0.5);
-    // this.game.add.tween(this.tomato).to({x: [ 300, 600, 0, 0 ], y: [ 400, 600, 400, 0 ]}, 4000, `Sine.easeInOut`, true, - 1, false);
     this.game.add.tween(this.tomato).to({angle: 360}, 2400, Phaser.Easing.Cubic.In, true, - 1, 0);
 
     this.carrot = this.game.add.sprite(this.middleX - 150, this.middleY + 150, `carrot`);
@@ -193,7 +183,6 @@ class Intro extends Phaser.State {
 
           const updateDistance = cm => {
             this.game.global.distance = cm;
-            // console.log(`intro`, this.game.global.distance);
           };
 
 
@@ -205,8 +194,6 @@ class Intro extends Phaser.State {
           });
 
           proximity.on(`change`, function() {
-            // updateDistance(this.cm);
-            //console.log(distance);
             // console.log(`The obstruction has moved.`);
           });
 
@@ -223,8 +210,6 @@ class Intro extends Phaser.State {
           this.game.global.led.on();
           // led.color(`#FF0000`);
 
-          //this.game.global.led.blink(1500);
-
           this.buttonStart = new five.Button({
             pin: 13,
             board
@@ -233,12 +218,6 @@ class Intro extends Phaser.State {
 
           this.buttonStart.on(`down`, () => {
             console.log(`gameStart intro`);
-
-            //this.game.state.start(`Play`);
-            // if (this.game.state.current === `Intro`) {
-            //   console.log(`start state`);
-            //   this.game.state.start(`Play`);
-            // }
           });
 
           this.buttonStart.on(`up`, () => {
@@ -397,11 +376,6 @@ class Intro extends Phaser.State {
 
           this.buttonInstructions.on(`down`, () => {
             console.log(`buttonInstructions`);
-            //this.game.state.start(`Play`);
-            // if (this.game.state.current === `Intro`) {
-            //   console.log(`start state`);
-            //   this.game.state.start(`Play`);
-            // }
           });
 
           this.buttonInstructions.on(`up`, () => {
@@ -409,7 +383,6 @@ class Intro extends Phaser.State {
             if (this.game.state.current === `Intro`) {
               console.log(`Instruct state`);
               this.voice.play();
-              // this.game.state.start(`Instruct`);
             }
           });
 

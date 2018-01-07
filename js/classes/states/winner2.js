@@ -6,7 +6,6 @@ class winner2 extends Phaser.State {
   create() {
     this.background();
     this.cookingPots();
-    this.addText();
     this.restartClick();
     this.leds();
     this.addscore();
@@ -52,25 +51,13 @@ class winner2 extends Phaser.State {
     console.log(this.restartButton);
     this.game.add.existing(this.restartButton);
   }
-  addText() {
-    // this.style = {font: `bold 200px Arial", fill: "#fff", boundsAlignH: "center", boundsAlignV: "middle`};
-    // this.text = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 200, `Player two wins !!`, this.style);
-    // this.text.anchor.set(0.5);
-    // this.text.setTextBounds(0, 100, 800, 100);
-    // this.game.add.existing(this.text);
-  }
+
   leds() {
     this.game.global.led2.color(`#00FF00`);
     this.game.global.led2.blink(125);
     this.game.global.led.stop();
-    // this.game.global.led.color(`#FF0000`);
-    // this.game.global.led2.stop().off();
   }
   addscore() {
-    // this.scoreText = this.game.add.text(this.game.world.centerX - 200, this.game.world.centerY + 200, `SCORE: ${this.game.global.score}`, {font: `27px BigJohn`, fill: `white`});
-    // this.scoreText.anchor.set(0.5);
-    // this.game.add.existing(this.scoreText);
-
     this.scoreText2 = this.game.add.text(this.game.world.centerX + 200, this.game.world.centerY + 200, `SCORE: ${this.game.global.score2}`, {font: `27px BigJohn`, fill: `white`});
     this.scoreText2.anchor.set(0.5);
     this.game.add.existing(this.scoreText2);

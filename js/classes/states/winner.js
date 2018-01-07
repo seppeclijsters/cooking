@@ -6,7 +6,6 @@ class winner extends Phaser.State {
   create() {
     this.background();
     this.cookingPots();
-    this.addText();
     this.restartClick();
     this.leds();
     this.addScore();
@@ -18,11 +17,8 @@ class winner extends Phaser.State {
     this.cheer.play();
   }
   background() {
-    // this.game.add.tileSprite(0, 0, this.game.width, this.game.height, `tiles`);
 
     this.game.stage.backgroundColor = `f5cf30`;
-    // this.cook = this.add.sprite(this.game.world.centerX - 200, this.game.world.centerY, `cook`);
-    // this.cook.anchor.setTo(.5);
     this.body = this.add.sprite(this.game.world.centerX - 200, this.game.world.centerY + 150, `body`);
     this.body.anchor.setTo(.5);
     this.head = this.add.sprite(this.game.world.centerX - 200, this.game.world.centerY + 40, `head`);
@@ -48,11 +44,8 @@ class winner extends Phaser.State {
 
   cookingPots() {
     this.potsTeam1 = this.game.add.group();
-    // this.pot1 = new Pot(this.game, this.game.world.centerX + 200, this.game.world.centerY + 200);
     this.pot2 = new Pot(this.game, this.game.world.centerX - 200, this.game.world.centerY + 200);
-    // this.pot1.scale.setTo(1.1);
     this.pot2.scale.setTo(1.1);
-    // this.potsTeam1.add(this.pot1);
     this.potsTeam1.add(this.pot2);
   }
   restartClick() {
@@ -60,12 +53,6 @@ class winner extends Phaser.State {
     this.restartButton.scale.setTo(0.6);
     console.log(this.restartButton);
     this.game.add.existing(this.restartButton);
-  }
-  addText() {
-    // this.text = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 200, `Speler 1 wint !!`, {font: `30px BigJohn`, fill: `black`});
-    // this.text.anchor.set(0.5);
-    // this.text.setTextBounds(0, 100, 800, 100);
-    // this.game.add.existing(this.text);
   }
 
   leds() {
@@ -77,10 +64,6 @@ class winner extends Phaser.State {
     this.scoreText = this.game.add.text(this.game.world.centerX - 200, this.game.world.centerY + 200, `SCORE: ${this.game.global.score}`, {font: `27px BigJohn`, fill: `white`});
     this.scoreText.anchor.set(0.5);
     this.game.add.existing(this.scoreText);
-
-    // this.scoreText2 = this.game.add.text(this.game.world.centerX + 200, this.game.world.centerY + 200, `SCORE: ${this.game.global.score2}`, {font: `27px BigJohn`, fill: `white`});
-    // this.scoreText2.anchor.set(0.5);
-    // this.game.add.existing(this.scoreText2);
   }
 
   deleteScore() {
