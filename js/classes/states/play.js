@@ -41,12 +41,15 @@ class Play extends Phaser.State {
     // this.emitter.on = false;
   }
   create() {
+    this.game.state.start(`winner`);
+    this.game.global.counterIngredients = 0;
     this.background();
     this.cookingPots();
     this.createLivesPlayer1();
     this.createLivesPlayer2();
     this.createSound();
     this.startGeneratingIngredients();
+    this.startMusic();
     //this.startGeneratingSmoke();
     this.createButtons();
     this.pickIngredient();
@@ -54,14 +57,17 @@ class Play extends Phaser.State {
     this.createScore();
     this.startOvercookTimer();
   }
-
-  killingcheese() {
-    this.cheese.kill();
-  }
-
   createSound() {
     this.done = this.game.add.audio(`done`);
+    this.bg = this.game.add.audio(`bg`);
+    // this.bgmusic = this.game.add.audio(`foo`);
+    // this.bgmusic.play();
   }
+
+  startMusic() {
+    this.bg.play();
+  }
+
 
   startOvercookTimer() {
     this.overcookingGenerator = this.time.events.loop(15000, this.overcooking, this);
@@ -70,20 +76,20 @@ class Play extends Phaser.State {
 
   createLivesPlayer1() {
     this.lives = this.add.group();
-    const firstLifeIconX = 125 - (PlayerLives * 30);
+    const firstLifeIconX = 150 + (PlayerLives * 30);
     for (let i = 0;i < PlayerLives;i ++) {
-      const life = this.lives.create(firstLifeIconX + (40 * i), 70, `life`);
-      life.scale.setTo(0.1, 0.1);
+      const life = this.lives.create(firstLifeIconX - (90 * i), 90, `life`);
+      // life.scale.setTo(0.1, 0.1);
       life.anchor.setTo(0.5, 0.5);
     }
   }
 
   createLivesPlayer2() {
     this.lives2 = this.add.group();
-    const firstLifeIconX2 = this.game.width - 335 - (PlayerLives * 30);
+    const firstLifeIconX2 = this.game.width - 150 - (PlayerLives * 30);
     for (let i = 0;i < PlayerLives;i ++) {
-      const life2 = this.lives2.create(firstLifeIconX2 + (40 * i), 70, `life`);
-      life2.scale.setTo(0.1, 0.1);
+      const life2 = this.lives2.create(firstLifeIconX2 + (90 * i), 90, `life`);
+      // life2.scale.setTo(0.1, 0.1);
       life2.anchor.setTo(0.5, 0.5);
     }
   }
@@ -191,7 +197,7 @@ class Play extends Phaser.State {
       this.emitter.makeParticles(`smoke`);
       this.emitter.setScale(0.05, 1, 1);
       this.emitter.setRotation(0, 0);
-      this.emitter.setAlpha(.2);
+      this.emitter.setAlpha(.02);
       this.emitter.width = 10;
       this.emitter.gravity = - 500;
       this.emitter.start(false, 2000, 10);
@@ -216,7 +222,7 @@ class Play extends Phaser.State {
       this.emitter2.makeParticles(`smoke`);
       this.emitter2.setScale(0.05, 1, 1);
       this.emitter2.setRotation(0, 0);
-      this.emitter2.setAlpha(.2);
+      this.emitter2.setAlpha(.02);
       this.emitter2.width = 10;
       this.emitter2.gravity = - 500;
       this.emitter2.start(false, 2000, 10);
@@ -225,35 +231,6 @@ class Play extends Phaser.State {
     if (this.emitter2.on === false) {
       this.emitter2.on = true;
     }
-
-    // console.log(`smokeEmitter`);
-    // if (this.emitter2) {
-    //   if (this.emitter2.on === false) {
-    //     this.emitter2.on = true;
-    //   }
-    // }
-    // this.checkSmoke = this.time.events.add(5000, this.checkingsmoke2, this);
-    // this.checkSmoke.autoDestroy = true;
-    // console.log(this.checkSmoke);
-    //
-    // if (!this.emitter2) {
-    //   this.emitter2 = this.game.add.emitter(this.game.world.centerX + 200, 500, 400);
-    //   this.emitter2.makeParticles(`smoke`);
-    //   this.emitter2.setScale(0.05, 1, 1);
-    //   this.emitter2.setRotation(0, 0);
-    //   this.emitter2.setAlpha(.2);
-    //   this.emitter2.width = 10;
-    //   this.emitter2.gravity = - 500;
-    //   this.emitter2.start(false, 2000, 10);
-    // }
-
-    // if (this.emitter.on === false) {
-    //   console.log(`emitter aan`);
-    //   this.emitter.on = true;
-    // } else {
-    //   this.emitter.on = false;
-    // }
-    // console.log(this.emitter);
   }
 
   scaleSort(a, b) {
@@ -287,20 +264,30 @@ class Play extends Phaser.State {
     rightKey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
   }
   createScore() {
-    this.scoreField = this.add.text(80, 20, `score: 0`, {font: `20px BigJohn`, fill: `black`});
-    this.scoreField2 = this.add.text(this.game.width - 80, 20, `score: 0`, {font: `20px BigJohn`, fill: `black`});
+    this.scoreField = this.add.text(80, 40, `score: 0`, {font: `20px BigJohn`, fill: `black`});
+    this.scoreField2 = this.add.text(this.game.width - 80, 40, `score: 0`, {font: `20px BigJohn`, fill: `black`});
     this.scoreField.anchor.set(0.5);
     this.scoreField2.anchor.set(0.5);
 
   }
   background() {
-    this.game.stage.backgroundColor = `#FFFFFF`;
-    this.game.add.tileSprite(0, 0, this.game.width, this.game.height, `tiles`);
+    // this.game.stage.backgroundColor = `#FFFFFF`;
+    this.background = this.game.stage.backgroundColor = `f5cf30`;
+    this.game.add.tileSprite(140, this.game.world.height - 160, this.game.width, 200, `kitchenTile4`);
+    this.kitchenCloset = this.add.sprite(50, this.game.world.height - 160, `kitchenCloset2`);
+    this.game.add.tileSprite(0, 0, 50, this.game.height, `kitchenTile3`);
+    this.game.add.tileSprite(50, 0, 70, this.game.world.centerY + 240, `kitchenTile2`);
+    this.game.add.tileSprite(50, this.game.world.centerY + 240, this.game.width, 60, `kitchenTile2`);
+    // this.kitchenCloset.anchor.set(.5);
+    // this.game.add.tileSprite(0, 0, 60, this.game.height, `tile3`);
+    // this.game.add.tileSprite(0, this.middleY + 250, this.world.width, this.world.height, `tile2`);
   }
   cookingPots() {
     this.potsTeam1 = this.game.add.group();
     this.pot1 = new Pot(this.game, this.game.world.centerX + 200, this.game.world.centerY + 200);
     this.pot2 = new Pot(this.game, this.game.world.centerX - 200, this.game.world.centerY + 200);
+    this.pot1.scale.setTo(1.1);
+    this.pot2.scale.setTo(1.1);
     this.potsTeam1.add(this.pot1);
     this.potsTeam1.add(this.pot2);
   }
@@ -679,13 +666,17 @@ class Play extends Phaser.State {
       this.scoreField2.text = `score${this.game.global.score2}`;
     }
 
-    // this.game.world.bringToTop(this.pot1);
-    // // this.potsTeam1.bringToTop();
-    // this.pot2.bringToTop();
+    this.ingredient.sendToBack();
+    this.ingredient2.sendToBack();
+    this.pot2.bringToTop();
+    this.pot1.bringToTop();
+
+
   }
 
   gameOver() {
     console.log(`game over`);
+    this.bg.stop();
     this.ingredientsGenerator.timer.destroy();
     this.ingredientsGenerator2.timer.destroy();
 

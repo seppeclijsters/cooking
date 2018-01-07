@@ -11,6 +11,11 @@ class winner2 extends Phaser.State {
     this.leds();
     this.addscore();
     this.deleteScore();
+    this.cheer();
+  }
+  cheer() {
+    this.cheer = this.game.add.audio(`applause`);
+    this.cheer.play();
   }
   background() {
     this.game.stage.backgroundColor = `#FFFFFF`;

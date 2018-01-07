@@ -26,7 +26,8 @@ const init = () => {
     score: 0,
     score2: 0,
     counter: 0,
-    count: - 1
+    count: - 1,
+    counterIngredients: 0
   };
 
 

@@ -8,7 +8,7 @@ require(`../../johnny_five`);
 const five = require(`johnny-five`);
 let distance;
 
-let counter = 0;
+// let counter = 0;
 //let buttonTomatoUp;
 
 class Intro extends Phaser.State {
@@ -16,7 +16,7 @@ class Intro extends Phaser.State {
     this.load.image(`logo`, `./assets/logo.png`);
     this.load.image(`how_button`, `./assets/hoe_button.png`);
     this.load.image(`start_button`, `./assets/start_button.png`);
-    this.load.image(`life`, `./assets/life.png`);
+    this.load.image(`life`, `./assets/chefLife.png`);
     this.game.load.image(`smoke`, `assets/smoke.png`);
     this.game.load.image(`kitchenCloset`, `assets/kitchencloset.png`);
     this.game.load.image(`tiles`, `assets/tiles.png`);
@@ -38,7 +38,22 @@ class Intro extends Phaser.State {
     this.game.load.image(`tomato`, `assets/tomato.png`);
     this.game.load.image(`cookingPot`, `assets/cookingPot.png`);
     this.game.load.image(`cookingPotFront`, `assets/cookingPotFront.png`);
-    this.game.load.audio(`done`, `assets/done.wav`);
+    this.game.load.audio(`done`, `assets/ring.mp3`);
+    this.game.load.audio(`voice`, `assets/voice.mp3`);
+    this.game.load.audio(`bg`, `assets/bg.mp3`);
+    this.game.load.audio(`applause`, `assets/applause.wav`);
+
+
+    this.game.load.image(`kitchenTile1`, `assets/tilePlay1.png`);
+    this.game.load.image(`kitchenTile2`, `assets/tilePlay2.png`);
+    this.game.load.image(`kitchenTile3`, `assets/tilePlay3.png`);
+    this.game.load.image(`kitchenTile4`, `assets/tilePlay4.png`);
+    this.game.load.image(`kitchenCloset2`, `assets/kitchencloset2.png`);
+    // this.game.load.image(`kitchenTile5`, `assets/tilePlay1.png`);
+
+    this.game.load.image(`cook`, `assets/cook.png`);
+    this.game.load.image(`head`, `assets/head.png`);
+    this.game.load.image(`body`, `assets/body.png`);
 
     this.game.state.add(`Play`, Play, false);
     this.game.state.add(`Instruct`, Instruct, false);
@@ -46,6 +61,7 @@ class Intro extends Phaser.State {
     this.game.state.add(`winner2`, winnerPlayer2, false);
   }
   create() {
+    this.voice = this.game.add.audio(`voice`);
     this.middleX = this.game.world.centerX;
     this.middleY = this.game.world.centerY;
     this.game.stage.backgroundColor = `#e2a489`;
@@ -215,6 +231,7 @@ class Intro extends Phaser.State {
 
           this.buttonStart.on(`down`, () => {
             console.log(`gameStart intro`);
+
             //this.game.state.start(`Play`);
             // if (this.game.state.current === `Intro`) {
             //   console.log(`start state`);
@@ -223,6 +240,7 @@ class Intro extends Phaser.State {
           });
 
           this.buttonStart.on(`up`, () => {
+            this.voice.stop();
             console.log(`gameStart intro`);
             console.log(this.game.state.current);
             if (this.game.state.current === `winner`) {
@@ -388,7 +406,8 @@ class Intro extends Phaser.State {
             console.log(this.game.state.current);
             if (this.game.state.current === `Intro`) {
               console.log(`Instruct state`);
-              this.game.state.start(`Instruct`);
+              this.voice.play();
+              // this.game.state.start(`Instruct`);
             }
           });
 
@@ -485,7 +504,6 @@ class Intro extends Phaser.State {
   }
 
   startClick() {
-    counter = 0;
     this.i = 0;
     this.i2 = 0;
     this.i3 = 0;
@@ -498,7 +516,7 @@ class Intro extends Phaser.State {
 
   update() {
     this.game.global.distance = distance;
-    counter ++;
+    this.game.global.counterIngredients ++;
     //console.log(`counter = ${counter}`);
     let posy2;
     let posy3;
@@ -510,7 +528,7 @@ class Intro extends Phaser.State {
     this.tomato.x = posx;
     this.tomato.y = posy;
 
-    if (counter > 50) {
+    if (this.game.global.counterIngredients > 50) {
       this.i2 += this.increment;
       //console.log(`this.I = ${this.i2}`);
       const posx2 = this.math.bezierInterpolation(this.points2.x, this.i2);
@@ -519,7 +537,7 @@ class Intro extends Phaser.State {
       this.carrot.y = posy2;
     }
 
-    if (counter > 20) {
+    if (this.game.global.counterIngredients > 20) {
       this.i3 += this.increment;
       const posx3 = this.math.bezierInterpolation(this.points3.x, this.i3);
       posy3 = this.math.bezierInterpolation(this.points3.y, this.i3);
@@ -527,7 +545,7 @@ class Intro extends Phaser.State {
       this.fish.y = posy3;
     }
 
-    if (counter > 70) {
+    if (this.game.global.counterIngredients > 70) {
       this.i4 += this.increment + 0.005;
       const posx4 = this.math.bezierInterpolation(this.points4.x, this.i4);
       posy4 = this.math.bezierInterpolation(this.points4.y, this.i4);
@@ -535,7 +553,7 @@ class Intro extends Phaser.State {
       this.potato.y = posy4;
     }
 
-    if (counter > 100) {
+    if (this.game.global.counterIngredients > 100) {
       this.i5 += this.increment;
       const posx5 = this.math.bezierInterpolation(this.points5.x, this.i5);
       posy5 = this.math.bezierInterpolation(this.points5.y, this.i5);
@@ -543,7 +561,7 @@ class Intro extends Phaser.State {
       this.egg.y = posy5;
     }
 
-    if (counter > 140) {
+    if (this.game.global.counterIngredients > 140) {
       this.i6 += this.increment + 0.005;
       const posx6 = this.math.bezierInterpolation(this.points6.x, this.i6);
       posy6 = this.math.bezierInterpolation(this.points6.y, this.i6);
