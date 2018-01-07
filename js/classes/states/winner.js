@@ -33,36 +33,31 @@ class winner extends Phaser.State {
     this.game.add.tileSprite(50, 0, 70, this.game.world.centerY + 240, `kitchenTile2`);
     this.game.add.tileSprite(50, this.game.world.centerY + 240, this.game.width, 60, `kitchenTile2`);
 
+    this.chalkboard = this.add.sprite(this.game.world.centerX + 130, this.game.world.centerY - 200, `chalkboard`);
+
     this.tweenA = this.game.add.tween(this.head).to({angle: - 20}, 2000, `Quart.easeOut`);
     this.tweenB = this.game.add.tween(this.head).to({angle: 20}, 2000, `Quart.easeOut`);
+    this.tweenC = this.game.add.tween(this.head).to({angle: - 20}, 2000, `Quart.easeOut`);
+    this.tweenD = this.game.add.tween(this.head).to({angle: 20}, 2000, `Quart.easeOut`);
 
     this.tweenA.chain(this.tweenB);
+    this.tweenB.chain(this.tweenC);
+    this.tweenC.chain(this.tweenD);
     this.tweenA.start();
-    // this.headTween = this.game.add.tween(this.head);
-    // this.headTween.to({angle: - 20}, 1000, Phaser.Easing.Bounce.Out);
-    // this.headTween.onComplete.add(this.firstTween());
-    // this.headTween.start();
-    // this.game.add.tween(this.head).to({angle: - 20}, 2000, Phaser.Easing.Cubic.In, true, - 1, 0);
   }
 
-  firstTween() {
-
-    this.s = this.game.add.tween(this.head);
-    this.s.to({angle: 20}, 1000, Phaser.Easing.Linear.None);
-    this.s.start();
-
-  }
   cookingPots() {
     this.potsTeam1 = this.game.add.group();
-    this.pot1 = new Pot(this.game, this.game.world.centerX + 200, this.game.world.centerY + 200);
+    // this.pot1 = new Pot(this.game, this.game.world.centerX + 200, this.game.world.centerY + 200);
     this.pot2 = new Pot(this.game, this.game.world.centerX - 200, this.game.world.centerY + 200);
-    this.pot1.scale.setTo(1.1);
+    // this.pot1.scale.setTo(1.1);
     this.pot2.scale.setTo(1.1);
-    this.potsTeam1.add(this.pot1);
+    // this.potsTeam1.add(this.pot1);
     this.potsTeam1.add(this.pot2);
   }
   restartClick() {
-    this.restartButton = new Button(this.game, this.game.world.centerX - 60, this.game.world.centerY + 250, `start_button`, this.startClick);
+    this.restartButton = new Button(this.game, this.game.world.centerX + 360, this.game.world.centerY, `start_button`, this.startClick);
+    this.restartButton.scale.setTo(0.6);
     console.log(this.restartButton);
     this.game.add.existing(this.restartButton);
   }
@@ -79,9 +74,13 @@ class winner extends Phaser.State {
     this.game.global.led2.stop();
   }
   addScore() {
-    // this.scoreText = this.game.add.text(this.game.world.centerX, this.game.world.centerY, `Met een score van : ${this.game.global.score}`, {font: `30px BigJohn`, fill: `black`});
-    // this.scoreText.anchor.set(0.5);
-    // this.game.add.existing(this.scoreText);
+    this.scoreText = this.game.add.text(this.game.world.centerX - 200, this.game.world.centerY + 200, `SCORE: ${this.game.global.score}`, {font: `27px BigJohn`, fill: `white`});
+    this.scoreText.anchor.set(0.5);
+    this.game.add.existing(this.scoreText);
+
+    // this.scoreText2 = this.game.add.text(this.game.world.centerX + 200, this.game.world.centerY + 200, `SCORE: ${this.game.global.score2}`, {font: `27px BigJohn`, fill: `white`});
+    // this.scoreText2.anchor.set(0.5);
+    // this.game.add.existing(this.scoreText2);
   }
 
   deleteScore() {
@@ -90,6 +89,7 @@ class winner extends Phaser.State {
     this.game.global.counter = 0;
     this.game.global.count = - 1;
   }
+
 }
 
 module.exports = winner;

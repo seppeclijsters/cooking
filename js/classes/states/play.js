@@ -41,7 +41,7 @@ class Play extends Phaser.State {
     // this.emitter.on = false;
   }
   create() {
-    this.game.state.start(`winner`);
+    this.game.state.start(`winner2`);
     this.game.global.counterIngredients = 0;
     this.background();
     this.cookingPots();
@@ -238,13 +238,18 @@ class Play extends Phaser.State {
   }
 
   stopGeneratingSmoke() {
-    // console.log(this.emitter);
-    this.emitter.on = false;
+    if (this.emitter) {
+      this.emitter.on = false;
+    }
+    // // console.log(this.emitter);
+    // this.emitter.on = false;
   }
 
   stopGeneratingSmoke2() {
     // console.log(this.emitter);
-    this.emitter2.on = false;
+    if (this.emitter2) {
+      this.emitter2.on = false;
+    }
   }
 
   stopOvercooking() {
